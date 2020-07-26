@@ -19,4 +19,6 @@ import { InfoHotbarComponent } from './info-hotbar/info-hotbar.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
+
+
