@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+
+$font-stack: Helvetica, sans-serif
+$font-size: 30px
+$primary-color: #333
+
+
+body
+    font: 100% $font-stack
+    color: $primary-color
+
+currency 
+    font-size: 30px
+    text-align: center
+    transition: 
+        property: font-size
+        duration: 2s
+        delay: 1s
+    
+    &:hover 
+        font-size: 40px 
