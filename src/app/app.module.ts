@@ -11,14 +11,15 @@ import { InfoHotbarComponent } from './info-hotbar/info-hotbar.component';
     AppComponent,
     SkillTreeComponent,
     HomeComponent,
-    InfoHotbarComponent
+    InfoHotbarComponent,
   ],
-  imports: [
-    BrowserModule
-  ],
+  imports: [BrowserModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent,
+    SkillTreeComponent,
+    HomeComponent,
+    InfoHotbarComponent,
+  ],
 })
 export class AppModule {}
-
-
