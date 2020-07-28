@@ -1,20 +1,55 @@
+.button-block
+  margin: 0 auto
+  text-align: center
+
 #skill-tree-btn
   padding: 10px 10px
-  margin: 10px 10px 10px 10px
-  width: 100px
+  margin: 25px 10px 25px 10px
+  width: 200px
+  
+#path-A > *
+  color: maroon
+
+#path-B > *
+  color: green
+
+#path-C > *
+  color: blue
+
+#skill-tree-grid
+  border: 1px solid
+  width: 600px
+  margin: 0 auto
 
 .grid-container
-  display: grid
-  height: 40vh
-  grid-template-columns: repeat(3, 50px)
-  grid-template-rows: repeat(5, 50px)
-  grid-template-areas: "skill-1 . skill-2" "skill-3 . skill-4" "skill-5 skill-6 skill-7" "skill-8 skill-9 ." ". skill-10 ."
+  display: inline-grid
+  grid-template-columns: repeat(3, 60px)
+  grid-template-rows: repeat(6, 60px)
+  grid-template-areas: "skill-1 . skill-2" "skill-3 . skill-4" "skill-5 skill-6 skill-7" "skill-8 skill-9 ." ". skill-10 ."  "path-title path-title path-title" 
+  margin: 10px 10px 10px 10px
 
 .grid-item
+  margin: 2px 2px 2px 2px
   border: 1px solid
+  border-radius: 10%
   padding: 5px
   font-size: 30px
   text-align: center
+
+.grid-item:hover
+  cursor: pointer
+  border: 5px solid black
+
+.grid-item:active
+  color: green
+
+.path-title
+  grid-area: path-title
+  border: none
+  text-align: center
+
+.path-title:hover
+  cursor: auto
 
 #skill-1
   grid-area: skill-1

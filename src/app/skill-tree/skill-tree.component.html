@@ -1,14 +1,52 @@
-<button id="skill-tree-btn" (click)="toggleDisplay()">Skill Tree</button>
+<div class="button-block">
+  <button
+    type="button"
+    class="btn"
+    id="skill-tree-btn"
+    (click)="toggleDisplay()"
+  >
+    Skill Tree
+  </button>
+</div>
 
-<div *ngIf="show" id="skill-tree-grid" class="grid-container">
-  <div class="grid-item" id="skill-1">1</div>
-  <div class="grid-item" id="skill-2">2</div>
-  <div class="grid-item" id="skill-3">3</div>
-  <div class="grid-item" id="skill-4">4</div>
-  <div class="grid-item" id="skill-5">5</div>
-  <div class="grid-item" id="skill-6">6</div>
-  <div class="grid-item" id="skill-7">7</div>
-  <div class="grid-item" id="skill-8">8</div>
-  <div class="grid-item" id="skill-9">9</div>
-  <div class="grid-item" id="skill-10">10</div>
+<div *ngIf="show" id="skill-tree-grid">
+  <div class="grid-container" id="path-A">
+    <div class="grid-item path-title">Path A</div>
+    <div class="grid-item" id="skill-1">1</div>
+    <div class="grid-item" id="skill-2">2</div>
+    <div class="grid-item" id="skill-3">3</div>
+    <div class="grid-item" id="skill-4">4</div>
+    <div class="grid-item" id="skill-5">5</div>
+    <div class="grid-item" id="skill-6">6</div>
+    <div class="grid-item" id="skill-7">7</div>
+    <div class="grid-item" id="skill-8">8</div>
+    <div class="grid-item" id="skill-9">9</div>
+    <div class="grid-item" id="skill-10">10</div>
+  </div>
+  <div class="grid-container" id="path-B">
+    <div class="grid-item path-title">Path B</div>
+    <div class="grid-item" id="skill-1">1</div>
+    <div class="grid-item" id="skill-2">2</div>
+    <div class="grid-item" id="skill-3">3</div>
+    <div class="grid-item" id="skill-4">4</div>
+    <div class="grid-item" id="skill-5">5</div>
+    <div class="grid-item" id="skill-6">6</div>
+    <div class="grid-item" id="skill-7">7</div>
+    <div class="grid-item" id="skill-8">8</div>
+    <div class="grid-item" id="skill-9">9</div>
+    <div class="grid-item" id="skill-10">10</div>
+  </div>
+  <div class="grid-container" id="path-C">
+    <div class="grid-item path-title">Path C</div>
+    <div class="grid-item" id="skill-1">1</div>
+    <div class="grid-item" id="skill-2">2</div>
+    <div class="grid-item" id="skill-3">3</div>
+    <div class="grid-item" id="skill-4">4</div>
+    <div class="grid-item" id="skill-5">5</div>
+    <div class="grid-item" id="skill-6">6</div>
+    <div class="grid-item" id="skill-7">7</div>
+    <div class="grid-item" id="skill-8">8</div>
+    <div class="grid-item" id="skill-9">9</div>
+    <div class="grid-item" id="skill-10">10</div>
+  </div>
 </div>
