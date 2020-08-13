@@ -120,7 +120,7 @@ export class SkillTreeComponent implements OnInit {
     },
     'wealth-6': {
       name: 'TODO',
-      desc: 'TODO',
+      desc: 'TODO55',
       cost: 1,
       purchased: false,
       effect: EffectType.TODO,
@@ -179,6 +179,13 @@ export class SkillTreeComponent implements OnInit {
   constructor(private modalService: NgbModal) {}
 
   ngOnInit(): void {}
+
+  setTooltips() {
+    let skills = document.getElementsByClassName('skill');
+    for (var i = 0; i < skills.length; i++) {
+      skills[i].setAttribute('title', this.allSkills[skills[i].id].desc);
+    }
+  }
 
   // From: https://www.encodedna.com/angular/how-to-show-hide-or-toggle-elements-in-angular-4.htm
   toggleDisplay() {
