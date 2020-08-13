@@ -1,1 +1,200 @@
-<p>skill-tree works!</p>
+<div class="button-block">
+  <button
+    type="button"
+    class="btn btn-primary"
+    id="skill-tree-btn"
+    (click)="toggleDisplay()"
+  >
+    Skill Tree
+  </button>
+</div>
+
+<div [hidden]="!showTree" id="skill-tree-grid">
+  <div class="skill-points">
+    Skill points available: <span id="skill-points"></span>
+  </div>
+  <div class="grid-container" id="path-infection">
+    <div class="grid-item path-title">Infection</div>
+    <div
+      class="grid-item skill-1"
+      id="infection-1"
+      (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
+    ></div>
+    <div
+      class="grid-item skill-2"
+      id="infection-2"
+      (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
+    ></div>
+    <div
+      class="grid-item skill-3"
+      id="infection-3"
+      (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
+    ></div>
+    <div
+      class="grid-item skill-4"
+      id="infection-4"
+      (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
+    ></div>
+    <div
+      class="grid-item skill-5"
+      id="infection-5"
+      (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
+    ></div>
+    <div
+      class="grid-item skill-6"
+      id="infection-6"
+      (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
+    ></div>
+  </div>
+  <div class="grid-container" id="path-wealth">
+    <div class="grid-item path-title">Wealth</div>
+    <div
+      class="grid-item skill-1"
+      id="wealth-1"
+      (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
+    ></div>
+    <div
+      class="grid-item skill-2"
+      id="wealth-2"
+      (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
+    ></div>
+    <div
+      class="grid-item skill-3"
+      id="wealth-3"
+      (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
+    ></div>
+    <div
+      class="grid-item skill-4"
+      id="wealth-4"
+      (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
+    ></div>
+    <div
+      class="grid-item skill-5"
+      id="wealth-5"
+      (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
+    ></div>
+    <div
+      class="grid-item skill-6"
+      id="wealth-6"
+      (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
+    ></div>
+  </div>
+  <div class="grid-container" id="path-stealth">
+    <div class="grid-item path-title">Stealth</div>
+    <div
+      class="grid-item skill-1"
+      id="stealth-1"
+      (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
+    ></div>
+    <div
+      class="grid-item skill-2"
+      id="stealth-2"
+      (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
+    ></div>
+    <div
+      class="grid-item skill-3"
+      id="stealth-3"
+      (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
+    ></div>
+    <div
+      class="grid-item skill-4"
+      id="stealth-4"
+      (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
+    ></div>
+    <div
+      class="grid-item skill-5"
+      id="stealth-5"
+      (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
+    ></div>
+    <div
+      class="grid-item skill-6"
+      id="stealth-6"
+      (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
+    ></div>
+  </div>
+  <br />
+  <br />
+
+  <!-- ng-bootstrap modal from https://ng-bootstrap.github.io/#/components/modal/examples -->
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="skill-name"></h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss()"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p id="skill-desc"></p>
+      <p id="skill-cost"></p>
+    </div>
+    <div class="modal-footer">
+      <p class="mr-auto" id="footer-skill-points"></p>
+      <button
+        class="btn btn-outline-danger"
+        id="cancelBtn"
+        (click)="modal.dismiss()"
+      >
+        Cancel
+      </button>
+      <button
+        *ngIf="!canPurchase"
+        disabled
+        class="btn btn-outline-secondary"
+        id="purchaseBtn"
+        data-toggle="tooltip"
+        title="Insufficient skill points"
+      >
+        Purchase
+      </button>
+      <button
+        *ngIf="canPurchase"
+        class="btn btn-outline-primary"
+        id="purchaseBtn"
+        (click)="purchaseSkill()"
+      >
+        Purchase
+      </button>
+    </div>
+  </ng-template>
+</div>
