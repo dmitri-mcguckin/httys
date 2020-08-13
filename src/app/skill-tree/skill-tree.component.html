@@ -1,7 +1,7 @@
 <div class="button-block">
   <button
     type="button"
-    class="btn"
+    class="btn btn-primary"
     id="skill-tree-btn"
     (click)="toggleDisplay()"
   >
@@ -18,32 +18,32 @@
     <div
       class="grid-item skill-1"
       id="infection-1"
-      (click)="buySkill($event)"
+      (click)="open(content, $event)"
     ></div>
     <div
       class="grid-item skill-2"
       id="infection-2"
-      (click)="buySkill($event)"
+      (click)="open(content, $event)"
     ></div>
     <div
       class="grid-item skill-3"
       id="infection-3"
-      (click)="buySkill($event)"
+      (click)="open(content, $event)"
     ></div>
     <div
       class="grid-item skill-4"
       id="infection-4"
-      (click)="buySkill($event)"
+      (click)="open(content, $event)"
     ></div>
     <div
       class="grid-item skill-5"
       id="infection-5"
-      (click)="buySkill($event)"
+      (click)="open(content, $event)"
     ></div>
     <div
       class="grid-item skill-6"
       id="infection-6"
-      (click)="buySkill($event)"
+      (click)="open(content, $event)"
     ></div>
   </div>
   <div class="grid-container" id="path-profit">
@@ -51,32 +51,32 @@
     <div
       class="grid-item skill-1"
       id="profit-1"
-      (click)="buySkill($event)"
+      (click)="open(content, $event)"
     ></div>
     <div
       class="grid-item skill-2"
       id="profit-2"
-      (click)="buySkill($event)"
+      (click)="open(content, $event)"
     ></div>
     <div
       class="grid-item skill-3"
       id="profit-3"
-      (click)="buySkill($event)"
+      (click)="open(content, $event)"
     ></div>
     <div
       class="grid-item skill-4"
       id="profit-4"
-      (click)="buySkill($event)"
+      (click)="open(content, $event)"
     ></div>
     <div
       class="grid-item skill-5"
       id="profit-5"
-      (click)="buySkill($event)"
+      (click)="open(content, $event)"
     ></div>
     <div
       class="grid-item skill-6"
       id="profit-6"
-      (click)="buySkill($event)"
+      (click)="open(content, $event)"
     ></div>
   </div>
   <div class="grid-container" id="path-stealth">
@@ -84,40 +84,73 @@
     <div
       class="grid-item skill-1"
       id="stealth-1"
-      (click)="buySkill($event)"
+      (click)="open(content, $event)"
     ></div>
     <div
       class="grid-item skill-2"
       id="stealth-2"
-      (click)="buySkill($event)"
+      (click)="open(content, $event)"
     ></div>
     <div
       class="grid-item skill-3"
       id="stealth-3"
-      (click)="buySkill($event)"
+      (click)="open(content, $event)"
     ></div>
     <div
       class="grid-item skill-4"
       id="stealth-4"
-      (click)="buySkill($event)"
+      (click)="open(content, $event)"
     ></div>
     <div
       class="grid-item skill-5"
       id="stealth-5"
-      (click)="buySkill($event)"
+      (click)="open(content, $event)"
     ></div>
     <div
       class="grid-item skill-6"
       id="stealth-6"
-      (click)="buySkill($event)"
+      (click)="open(content, $event)"
     ></div>
   </div>
   <br />
   <br />
-  <!-- <div id="prompt-buy-skill" style="display: none;">
-    <p></p>
-    <p></p>
-    <p></p>
-    <p></p>
-  </div> -->
+
+  <!-- ng-bootstrap modal from https://ng-bootstrap.github.io/#/components/modal/examples -->
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label for="dateOfBirth">Date of birth</label>
+          <div class="input-group">
+            <input
+              id="dateOfBirth"
+              class="form-control"
+              placeholder="yyyy-mm-dd"
+              name="dp"
+              ngbDatepicker
+              #dp="ngbDatepicker"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary calendar"
+                (click)="dp.toggle()"
+                type="button"
+              ></button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-template>
 </div>

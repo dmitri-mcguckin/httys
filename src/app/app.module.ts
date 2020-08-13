@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { SkillTreeComponent } from './skill-tree/skill-tree.component';
 import { HomeComponent } from './home/home.component';
 import { InfoHotbarComponent } from './info-hotbar/info-hotbar.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,7 @@ import { InfoHotbarComponent } from './info-hotbar/info-hotbar.component';
     HomeComponent,
     InfoHotbarComponent,
   ],
-  imports: [BrowserModule],
+  imports: [BrowserModule, NgbModule],
   providers: [],
   bootstrap: [
     AppComponent,

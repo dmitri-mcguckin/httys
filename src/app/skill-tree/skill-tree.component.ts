@@ -1,6 +1,8 @@
+// ng-bootstrap modal from https://ng-bootstrap.github.io/#/components/modal/examples
 import { Component, OnInit, Directive } from '@angular/core';
 import { BuiltinType } from '@angular/compiler';
 import { $ } from 'protractor';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 interface Skill {
   name: string;
@@ -25,7 +27,7 @@ export class SkillTreeComponent implements OnInit {
     },
   };
 
-  constructor() {}
+  constructor(private modalService: NgbModal) {}
 
   ngOnInit(): void {}
 
@@ -39,12 +41,9 @@ export class SkillTreeComponent implements OnInit {
     }
   }
 
-  buySkill(event) {
-    let skillId = event.target.id;
-    alert(document.getElementById('currency').innerHTML);
-    // this.skillInfo[skillId].name;
-    // this.skillInfo[skillId].description;
-    // this.skillInfo[skillId].bitCost;
-    // this.skillInfo[skillId].moneyCost;
+  // ng-bootstrap modal from https://ng-bootstrap.github.io/#/components/modal/examples
+  open(content, event) {
+    alert(event.target.id);
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 }
