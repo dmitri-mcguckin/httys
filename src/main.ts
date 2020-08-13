@@ -40,6 +40,7 @@ function updateGUI(currency: currencies, attacking: attacks): number {
     document.getElementById("Attack Percentage").textContent = "Attack Percentage: " + Math.floor((attacking.completed/attacking.total)*100) + "%";
     document.getElementById("Attack Completed").textContent = "Attack Completed: " + attacking.completed;
     document.getElementById("Attack Total").textContent = "Attack Total: " + attacking.total;
+    document.getElementById("Attack Name").textContent = "Attack Name: " + attacking.attack_name;
   }
 
   currency.bits = currency.generate_currency(currency.bits);

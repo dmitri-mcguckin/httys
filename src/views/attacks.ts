@@ -37,7 +37,7 @@ export class attack implements attacks{
 
         if(attacking.completed >= attacking.total){   //we are done attacking. reset everything.
             currency.bits += this.reward();
-            attacking.attack_name = null;
+            attacking.attack_name = null; //stop attacks from continuing infinetly. 
             attacking.completed = 0;
             return;
         }
@@ -59,15 +59,17 @@ export class attack implements attacks{
     choose_attack(currency: currencies, attacking:attacks){
         if (attacking.attack_name == null){   //we don't have an attack selected. 
             var choice = (document.getElementById("malwares")) as HTMLSelectElement;
-            var total = choice.options[choice.selectedIndex].value;
-            attacking.attack_name = choice.outerHTML;
-            //attacking.elapsed = parseInt(total, 10);
-            attacking.total = Math.floor(Math.random() * (10000000000 - 1000000)+ 1000000);  //Couldn't read from HTML so doing this instead. 
+            //attacking.attack_name = choice.outerHTML;
+            attacking.attack_name = choice.value;
+            if(attacking.attack_name == "Choose an Attack"){
+                return;
+            }
+            attacking.total = Math.floor(Math.random() * (1000000000 - 1000000)+ 1000000);  //Couldn't read from HTML so doing this instead. 
             attacking.start_time = this.start();  //get start_time from function above. 
-            return attacking.attack_name;
+            return;
         }
         else{   //we are still working on an attack. 
-            return attacking.attack_name;
+            return;
         }
     
     }
