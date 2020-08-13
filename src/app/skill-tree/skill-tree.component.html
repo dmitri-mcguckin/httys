@@ -9,9 +9,9 @@
   </button>
 </div>
 
-<div *ngIf="showTree" id="skill-tree-grid">
+<div [hidden]="!showTree" id="skill-tree-grid">
   <div class="skill-points">
-    Skill points available: X
+    Skill points available: <span id="skill-points"></span>
   </div>
   <div class="grid-container" id="path-infection">
     <div class="grid-item path-title">Infection</div>
@@ -118,39 +118,35 @@
   <!-- ng-bootstrap modal from https://ng-bootstrap.github.io/#/components/modal/examples -->
   <ng-template #content let-modal>
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+      <h4 class="modal-title" id="modal-basic-title"></h4>
       <button
         type="button"
         class="close"
         aria-label="Close"
-        (click)="modal.dismiss('Cross click')"
+        (click)="modal.dismiss()"
       >
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <form>
-        <div class="form-group">
-          <label for="dateOfBirth">Date of birth</label>
-          <div class="input-group">
-            <input
-              id="dateOfBirth"
-              class="form-control"
-              placeholder="yyyy-mm-dd"
-              name="dp"
-              ngbDatepicker
-              #dp="ngbDatepicker"
-            />
-            <div class="input-group-append">
-              <button
-                class="btn btn-outline-secondary calendar"
-                (click)="dp.toggle()"
-                type="button"
-              ></button>
-            </div>
-          </div>
-        </div>
-      </form>
+      <p id="skill-desc"></p>
+      <p id="skill-cost"></p>
+    </div>
+    <div class="modal-footer">
+      <button
+        class="btn btn-outline-danger"
+        id="cancelBtn"
+        (click)="modal.dismiss()"
+      >
+        Cancel
+      </button>
+      <button
+        class="btn btn-outline-primary"
+        id="purchaseBtn"
+        (click)="purchaseSkill()"
+      >
+        Purchase
+      </button>
     </div>
   </ng-template>
 </div>

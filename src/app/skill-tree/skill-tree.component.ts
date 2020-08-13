@@ -1,14 +1,13 @@
 // ng-bootstrap modal from https://ng-bootstrap.github.io/#/components/modal/examples
-import { Component, OnInit, Directive } from '@angular/core';
+import { Component, OnInit, Directive, ViewChild } from '@angular/core';
 import { BuiltinType } from '@angular/compiler';
 import { $ } from 'protractor';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 interface Skill {
   name: string;
-  description: string;
-  bitCost: number;
-  moneyCost: number;
+  desc: string;
+  cost: number;
 }
 
 @Component({
@@ -17,13 +16,13 @@ interface Skill {
   styleUrls: ['./skill-tree.component.sass'],
 })
 export class SkillTreeComponent implements OnInit {
+  public skillPoints: number = 0;
   public showTree: boolean = false;
   skillInfo: Record<string, Skill> = {
     'infection-1': {
       name: 'Bit Boost',
-      description: '+25% bits',
-      bitCost: 5000,
-      moneyCost: 0,
+      desc: '+25% passive bit gain',
+      cost: 1,
     },
   };
 
@@ -36,14 +35,30 @@ export class SkillTreeComponent implements OnInit {
     this.showTree = !this.showTree;
     if (this.showTree) {
       document.querySelector('#skill-tree-btn').innerHTML = 'Hide';
+      document.getElementById(
+        'skill-points'
+      ).innerText = this.skillPoints.toString();
     } else {
       document.querySelector('#skill-tree-btn').innerHTML = 'Skill Tree';
     }
   }
 
+  purchaseSkill() {
+    alert('purchased');
+  }
+
   // ng-bootstrap modal from https://ng-bootstrap.github.io/#/components/modal/examples
   open(content, event) {
-    alert(event.target.id);
+    let selectedSkill = this.skillInfo[event.target.id];
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    document.getElementById('modal-basic-title').innerText = selectedSkill.name;
+    document.getElementById('skill-desc').innerText = selectedSkill.desc;
+    if (selectedSkill.cost === 1) {
+      document.getElementById('skill-cost').innerText =
+        selectedSkill.cost.toString() + ' skill point';
+    } else {
+      document.getElementById('skill-cost').innerText =
+        selectedSkill.cost.toString() + ' skill points';
+    }
   }
 }
