@@ -19,31 +19,43 @@
       class="grid-item skill-1"
       id="infection-1"
       (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
     ></div>
     <div
       class="grid-item skill-2"
       id="infection-2"
       (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
     ></div>
     <div
       class="grid-item skill-3"
       id="infection-3"
       (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
     ></div>
     <div
       class="grid-item skill-4"
       id="infection-4"
       (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
     ></div>
     <div
       class="grid-item skill-5"
       id="infection-5"
       (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
     ></div>
     <div
       class="grid-item skill-6"
       id="infection-6"
       (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
     ></div>
   </div>
   <div class="grid-container" id="path-profit">
@@ -52,31 +64,43 @@
       class="grid-item skill-1"
       id="profit-1"
       (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
     ></div>
     <div
       class="grid-item skill-2"
       id="profit-2"
       (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
     ></div>
     <div
       class="grid-item skill-3"
       id="profit-3"
       (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
     ></div>
     <div
       class="grid-item skill-4"
       id="profit-4"
       (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
     ></div>
     <div
       class="grid-item skill-5"
       id="profit-5"
       (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
     ></div>
     <div
       class="grid-item skill-6"
       id="profit-6"
       (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
     ></div>
   </div>
   <div class="grid-container" id="path-stealth">
@@ -85,31 +109,43 @@
       class="grid-item skill-1"
       id="stealth-1"
       (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
     ></div>
     <div
       class="grid-item skill-2"
       id="stealth-2"
       (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
     ></div>
     <div
       class="grid-item skill-3"
       id="stealth-3"
       (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
     ></div>
     <div
       class="grid-item skill-4"
       id="stealth-4"
       (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
     ></div>
     <div
       class="grid-item skill-5"
       id="stealth-5"
       (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
     ></div>
     <div
       class="grid-item skill-6"
       id="stealth-6"
       (click)="open(content, $event)"
+      data-toggle="tooltip"
+      title="TODO"
     ></div>
   </div>
   <br />
@@ -118,7 +154,7 @@
   <!-- ng-bootstrap modal from https://ng-bootstrap.github.io/#/components/modal/examples -->
   <ng-template #content let-modal>
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title"></h4>
+      <h4 class="modal-title" id="skill-name"></h4>
       <button
         type="button"
         class="close"
@@ -131,8 +167,10 @@
     <div class="modal-body">
       <p id="skill-desc"></p>
       <p id="skill-cost"></p>
+      <p id="can-purchase"></p>
     </div>
     <div class="modal-footer">
+      <p class="mr-auto" id="footer-skill-points"></p>
       <button
         class="btn btn-outline-danger"
         id="cancelBtn"
@@ -141,6 +179,18 @@
         Cancel
       </button>
       <button
+        *ngIf="!canPurchase"
+        disabled
+        class="btn btn-outline-secondary"
+        id="purchaseBtn"
+        (click)="purchaseSkill()"
+        data-toggle="tooltip"
+        title="Insufficient skill points"
+      >
+        Purchase
+      </button>
+      <button
+        *ngIf="canPurchase"
         class="btn btn-outline-primary"
         id="purchaseBtn"
         (click)="purchaseSkill()"

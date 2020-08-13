@@ -16,8 +16,9 @@ interface Skill {
   styleUrls: ['./skill-tree.component.sass'],
 })
 export class SkillTreeComponent implements OnInit {
-  public skillPoints: number = 0;
-  public showTree: boolean = false;
+  skillPoints: number = 0;
+  canPurchase: boolean = false;
+  showTree: boolean = false;
   skillInfo: Record<string, Skill> = {
     'infection-1': {
       name: 'Bit Boost',
@@ -50,8 +51,10 @@ export class SkillTreeComponent implements OnInit {
   // ng-bootstrap modal from https://ng-bootstrap.github.io/#/components/modal/examples
   open(content, event) {
     let selectedSkill = this.skillInfo[event.target.id];
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
-    document.getElementById('modal-basic-title').innerText = selectedSkill.name;
+    this.modalService.open(content, { ariaLabelledBy: 'skill-name' });
+    document.getElementById('footer-skill-points').innerText =
+      'Skill points available: ' + this.skillPoints.toString();
+    document.getElementById('skill-name').innerText = selectedSkill.name;
     document.getElementById('skill-desc').innerText = selectedSkill.desc;
     if (selectedSkill.cost === 1) {
       document.getElementById('skill-cost').innerText =
@@ -59,6 +62,12 @@ export class SkillTreeComponent implements OnInit {
     } else {
       document.getElementById('skill-cost').innerText =
         selectedSkill.cost.toString() + ' skill points';
+    }
+
+    if (this.skillPoints >= selectedSkill.cost) {
+      this.canPurchase = true;
+    } else {
+      this.canPurchase = false;
     }
   }
 }
