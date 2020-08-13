@@ -2,11 +2,21 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+enum EffectType {
+  TODO = 'TODO',
+  lumpSum = 'lumpSum',
+  flatPerSec = 'flatPerSec',
+  mult = 'mult',
+  compound = 'compound',
+}
+
 interface Skill {
   name: string;
   desc: string;
   cost: number;
   purchased: boolean;
+  effect: EffectType;
+  modifier: number;
 }
 
 @Component({
@@ -25,36 +35,144 @@ export class SkillTreeComponent implements OnInit {
       desc: '+25% passive bit gain',
       cost: 1,
       purchased: false,
+      effect: EffectType.TODO,
+      modifier: 100,
     },
     'infection-2': {
       name: 'TODO',
       desc: 'TODO',
       cost: 1,
       purchased: false,
+      effect: EffectType.TODO,
+      modifier: 100,
     },
     'infection-3': {
       name: 'TODO',
       desc: 'TODO',
       cost: 1,
       purchased: false,
+      effect: EffectType.TODO,
+      modifier: 100,
     },
     'infection-4': {
       name: 'TODO',
       desc: 'TODO',
       cost: 1,
       purchased: false,
+      effect: EffectType.TODO,
+      modifier: 100,
     },
     'infection-5': {
       name: 'TODO',
       desc: 'TODO',
       cost: 1,
       purchased: false,
+      effect: EffectType.TODO,
+      modifier: 100,
     },
     'infection-6': {
       name: 'TODO',
       desc: 'TODO',
       cost: 1,
       purchased: false,
+      effect: EffectType.TODO,
+      modifier: 100,
+    },
+    'wealth-1': {
+      name: 'TODO',
+      desc: 'TODO',
+      cost: 1,
+      purchased: false,
+      effect: EffectType.TODO,
+      modifier: 100,
+    },
+    'wealth-2': {
+      name: 'TODO',
+      desc: 'TODO',
+      cost: 1,
+      purchased: false,
+      effect: EffectType.TODO,
+      modifier: 100,
+    },
+    'wealth-3': {
+      name: 'TODO',
+      desc: 'TODO',
+      cost: 1,
+      purchased: false,
+      effect: EffectType.TODO,
+      modifier: 100,
+    },
+    'wealth-4': {
+      name: 'TODO',
+      desc: 'TODO',
+      cost: 1,
+      purchased: false,
+      effect: EffectType.TODO,
+      modifier: 100,
+    },
+    'wealth-5': {
+      name: 'TODO',
+      desc: 'TODO',
+      cost: 1,
+      purchased: false,
+      effect: EffectType.TODO,
+      modifier: 100,
+    },
+    'wealth-6': {
+      name: 'TODO',
+      desc: 'TODO',
+      cost: 1,
+      purchased: false,
+      effect: EffectType.TODO,
+      modifier: 100,
+    },
+    'stealth-1': {
+      name: 'TODO',
+      desc: 'TODO',
+      cost: 1,
+      purchased: false,
+      effect: EffectType.TODO,
+      modifier: 100,
+    },
+    'stealth-2': {
+      name: 'TODO',
+      desc: 'TODO',
+      cost: 1,
+      purchased: false,
+      effect: EffectType.TODO,
+      modifier: 100,
+    },
+    'stealth-3': {
+      name: 'TODO',
+      desc: 'TODO',
+      cost: 1,
+      purchased: false,
+      effect: EffectType.TODO,
+      modifier: 100,
+    },
+    'stealth-4': {
+      name: 'TODO',
+      desc: 'TODO',
+      cost: 1,
+      purchased: false,
+      effect: EffectType.TODO,
+      modifier: 100,
+    },
+    'stealth-5': {
+      name: 'TODO',
+      desc: 'TODO',
+      cost: 1,
+      purchased: false,
+      effect: EffectType.TODO,
+      modifier: 100,
+    },
+    'stealth-6': {
+      name: 'TODO',
+      desc: 'TODO',
+      cost: 1,
+      purchased: false,
+      effect: EffectType.TODO,
+      modifier: 100,
     },
   };
 
