@@ -22,4 +22,8 @@ export class SkillTreeComponent implements OnInit {
       document.querySelector('#skill-tree-btn').innerHTML = 'Skill Tree';
     }
   }
+
+  buySkill(event) {
+    alert(event.target.id);
+  }
 }
