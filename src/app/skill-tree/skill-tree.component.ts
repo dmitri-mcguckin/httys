@@ -86,7 +86,7 @@ export class SkillTreeComponent implements OnInit {
     let currSkill = document.getElementById(this.skillId);
     if (this.skillId.search('infect') > -1) {
       currSkill.style.backgroundColor = 'maroon';
-    } else if (this.skillId.search('profit') > -1) {
+    } else if (this.skillId.search('wealth') > -1) {
       currSkill.style.backgroundColor = 'green';
     } else {
       currSkill.style.backgroundColor = 'blue';
