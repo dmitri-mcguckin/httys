@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { SkillTreeComponent } from './components/skill-tree/skill-tree.component';
+import { SkillTreeComponent } from './skill-tree/skill-tree.component';
 import { HomeComponent } from './home/home.component';
 import { InfoHotbarComponent } from './info-hotbar/info-hotbar.component';
 
@@ -19,4 +19,6 @@ import { InfoHotbarComponent } from './info-hotbar/info-hotbar.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
+
+
