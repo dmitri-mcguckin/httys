@@ -4,19 +4,19 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 enum EffectType {
   TODO = 'TODO',
-  lump = 'lump',
-  add = 'add',
-  mult = 'mult',
-  compound = 'compound',
+  lump = 'lump', // lump sum, such as +5000 bits
+  add = 'add', // additive, such as +50 bits per second
+  mult = 'mult', // multiplicative, such as 25% more bits from all sources = 1.25x
+  compound = 'compound', // compound (exponential), such as gain 2% of your total bits every second
 }
 
 interface Skill {
   name: string;
   desc: string;
-  cost: number;
-  purchased: boolean;
-  effect: EffectType;
-  modifier: number;
+  cost: number; // cost in terms of skil points
+  purchased: boolean; // whether the user has purchased the skill or not
+  effect: EffectType; // the type of effect: lump sum, additive, multiplicative, compound (exponential)
+  modifier: number; // the modifier for the skill's effect (e.g. 25% = 1.25)
 }
 
 @Component({
@@ -25,11 +25,12 @@ interface Skill {
   styleUrls: ['./skill-tree.component.sass'],
 })
 export class SkillTreeComponent implements OnInit {
-  skillPoints: number = 2;
-  skillId: string;
-  canPurchase: boolean = false;
-  showTree: boolean = false;
+  skillPoints: number = 2; // user's number of skill points
+  skillId: string; // HTML id of a skill
+  canPurchase: boolean = false; // if user's # skill points >= skill cost, canPurchase = true
+  showTree: boolean = false; // toggle displaying the skill tree
   allSkills: Record<string, Skill> = {
+    // record of all skills in the skill tree
     'infection-1': {
       name: 'Bit Accumulator',
       desc: '+50 bits per second',
@@ -178,14 +179,24 @@ export class SkillTreeComponent implements OnInit {
 
   constructor(private modalService: NgbModal) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.setTooltips();
+  }
 
+  // go through all skills (grid items) and set their tooltip (title) to be their description
   setTooltips() {
     let skills = document.getElementsByClassName('skill');
     for (var i = 0; i < skills.length; i++) {
-      skills[i].setAttribute('title', this.allSkills[skills[i].id].desc);
+      skills[i].setAttribute(
+        'title',
+        this.allSkills[skills[i].id].name +
+          `: ` +
+          this.allSkills[skills[i].id].desc
+      );
     }
   }
+
+  setModifiers() {}
 
   // From: https://www.encodedna.com/angular/how-to-show-hide-or-toggle-elements-in-angular-4.htm
   toggleDisplay() {
