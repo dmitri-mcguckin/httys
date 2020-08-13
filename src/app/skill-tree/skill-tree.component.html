@@ -12,6 +12,13 @@
 <div [hidden]="!showTree" id="skill-tree-grid">
   <div class="skill-points">
     Skill points available: <span id="skill-points"></span>
+    <button
+      class="btn btn-secondary btn-lg float-right"
+      id="resetBtn"
+      (click)="resetSkills()"
+    >
+      Reset
+    </button>
   </div>
   <div class="grid-container" id="path-infection">
     <div class="grid-item path-title">Infection</div>
