@@ -196,7 +196,7 @@ export class SkillTreeComponent implements OnInit {
     }
   }
 
-  setModifiers() {
+  setModifiers(skill) {
     // lump sum: N/A
     // add: accumulate additive modifier
     // mult: accumulate multiplicative modifier
@@ -233,6 +233,7 @@ export class SkillTreeComponent implements OnInit {
       currSkill.style.backgroundColor = 'blue';
     }
     this.modalService.dismissAll();
+    this.setModifiers(this.allSkills[this.skillId]);
   }
 
   resetSkills() {
