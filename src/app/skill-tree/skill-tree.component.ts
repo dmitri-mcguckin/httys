@@ -1,5 +1,6 @@
 // ng-bootstrap modal from https://ng-bootstrap.github.io/#/components/modal/examples
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 enum EffectType {
