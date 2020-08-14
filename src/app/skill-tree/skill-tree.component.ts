@@ -29,8 +29,9 @@ export class SkillTreeComponent implements OnInit {
   skillId: string; // HTML id of a skill
   canPurchase: boolean = false; // if user's # skill points >= skill cost, canPurchase = true
   showTree: boolean = false; // toggle displaying the skill tree
+  // userModifiers:
   allSkills: Record<string, Skill> = {
-    // record of all skills in the skill tree
+    // Record of all skills in the skill tree
     'infection-1': {
       name: 'Bit Accumulator',
       desc: '+50 bits per second',
@@ -69,7 +70,7 @@ export class SkillTreeComponent implements OnInit {
       cost: 3,
       purchased: false,
       effect: EffectType.mult,
-      modifier: 2,
+      modifier: 1,
     },
     'infection-6': {
       name: 'Bit Emperor',
@@ -109,7 +110,7 @@ export class SkillTreeComponent implements OnInit {
       cost: 2,
       purchased: false,
       effect: EffectType.mult,
-      modifier: 2,
+      modifier: 1,
     },
     'wealth-5': {
       name: 'Benjamins',
@@ -128,62 +129,63 @@ export class SkillTreeComponent implements OnInit {
       modifier: 0.08,
     },
     'stealth-1': {
-      name: 'Shifty',
-      desc: '-0.25 detection per second',
+      name: 'Cloak',
+      desc: '-25% detection',
+      cost: 1,
+      purchased: false,
+      effect: EffectType.mult,
+      modifier: 0.25,
+    },
+    'stealth-2': {
+      name: 'Shroud',
+      desc: '+6 hours to detection buffer (permanently)',
       cost: 1,
       purchased: false,
       effect: EffectType.add,
-      modifier: -0.25,
-    },
-    'stealth-2': {
-      name: '',
-      desc: 'TODO',
-      cost: 1,
-      purchased: false,
-      effect: EffectType.TODO,
       modifier: 0,
     },
     'stealth-3': {
-      name: 'TODO',
-      desc: 'TODO',
-      cost: 1,
+      name: 'Cover Your Tracks',
+      desc: '+12 hours to detection buffer (permanently)',
+      cost: 2,
       purchased: false,
-      effect: EffectType.TODO,
-      modifier: 0,
+      effect: EffectType.add,
+      modifier: 12,
     },
     'stealth-4': {
-      name: 'TODO',
-      desc: 'TODO',
-      cost: 1,
+      name: 'Disappear',
+      desc: 'Reset detection level to 0 (one-time)',
+      cost: 2,
       purchased: false,
-      effect: EffectType.TODO,
-      modifier: 0,
+      effect: EffectType.lump,
+      modifier: -9999,
     },
     'stealth-5': {
-      name: 'TODO',
-      desc: 'TODO',
-      cost: 1,
+      name: 'Watchdog',
+      desc: '+24 hours to detection buffer (permanently)',
+      cost: 3,
       purchased: false,
-      effect: EffectType.TODO,
-      modifier: 0,
+      effect: EffectType.add,
+      modifier: 24,
     },
     'stealth-6': {
-      name: 'TODO',
-      desc: 'TODO',
-      cost: 1,
+      name: 'Ghost',
+      desc: '-300% detection',
+      cost: 5,
       purchased: false,
-      effect: EffectType.TODO,
-      modifier: 0,
+      effect: EffectType.mult,
+      modifier: 3,
     },
   };
 
+  //
   constructor(private modalService: NgbModal) {}
 
   ngOnInit(): void {
     this.setTooltips();
   }
 
-  // go through all skills (grid items) and set their tooltip (title) to be their description
+  // set each skill'1 tooltip to include name and description
   setTooltips() {
     let skills = document.getElementsByClassName('skill');
     for (var i = 0; i < skills.length; i++) {
@@ -196,12 +198,15 @@ export class SkillTreeComponent implements OnInit {
     }
   }
 
+  // set user's modifiers based upon skills known
   setModifiers(skill) {
-    // lump sum: N/A
     // add: accumulate additive modifier
     // mult: accumulate multiplicative modifier
     // compound: accumulate compound modifier
   }
+
+  // payout lump sum skill effect (such as 'gain 20,000 bits (one-time)')
+  setLumpSum(skill) {}
 
   // From: https://www.encodedna.com/angular/how-to-show-hide-or-toggle-elements-in-angular-4.htm
   toggleDisplay() {
@@ -233,7 +238,11 @@ export class SkillTreeComponent implements OnInit {
       currSkill.style.backgroundColor = 'blue';
     }
     this.modalService.dismissAll();
-    this.setModifiers(this.allSkills[this.skillId]);
+    if (this.allSkills[this.skillId].effect != 'lump') {
+      this.setModifiers(this.allSkills[this.skillId]);
+    } else {
+      this.setLumpSum(this.allSkills[this.skillId]);
+    }
   }
 
   resetSkills() {
