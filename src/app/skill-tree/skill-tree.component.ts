@@ -17,12 +17,13 @@ interface Skill {
   purchased: boolean; // whether the user has purchased the skill or not
   effect: EffectType; // the type of effect: lump sum, additive, multiplicative, exponential
   modifier: number; // the modifier for the skill's effect (e.g. 25% = 1.25)
+  tree: string; // "infection", "wealth", or "stealth"
 }
 
 interface SkillMod {
-  addMod: number;
-  multMod: number;
-  expMod: number;
+  addMod: number; // additive, such as +50 bits per second
+  multMod: number; // multiplicative, such as 25% more bits from all sources = 1.25x
+  expMod: number; // exponential, such as gain 2% of your total bits every second
 }
 
 @Component({
@@ -35,6 +36,8 @@ export class SkillTreeComponent implements OnInit {
   skillId: string; // HTML id of a skill
   canPurchase: boolean = false; // if user's # skill points >= skill cost, canPurchase = true
   showTree: boolean = false; // toggle displaying the skill tree
+
+  // modifiers for each of the three skill trees (Infection, Wealth, and Stealth)
   infectionMod: SkillMod = {
     addMod: 0,
     multMod: 1,
@@ -50,8 +53,9 @@ export class SkillTreeComponent implements OnInit {
     multMod: 1,
     expMod: 1,
   };
+
+  // a Record of all skills in the skill tree
   allSkills: Record<string, Skill> = {
-    // Record of all skills in the skill tree
     'infection-1': {
       name: 'Bit Accumulator',
       desc: '+50 bits per second',
@@ -59,6 +63,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.add,
       modifier: 50,
+      tree: 'infection',
     },
     'infection-2': {
       name: 'Bit Bundle',
@@ -67,6 +72,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.lump,
       modifier: 20000,
+      tree: 'infection',
     },
     'infection-3': {
       name: 'Bit Miner',
@@ -75,6 +81,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.add,
       modifier: 150,
+      tree: 'infection',
     },
     'infection-4': {
       name: 'Bit Bonanza',
@@ -83,6 +90,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.lump,
       modifier: 75000,
+      tree: 'infection',
     },
     'infection-5': {
       name: 'Bit Frenzy',
@@ -91,6 +99,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.mult,
       modifier: 1,
+      tree: 'infection',
     },
     'infection-6': {
       name: 'Bit Emperor',
@@ -99,6 +108,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.exp,
       modifier: 0.05,
+      tree: 'infection',
     },
     'wealth-1': {
       name: 'Coin Collector',
@@ -107,6 +117,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.add,
       modifier: 5,
+      tree: 'wealth',
     },
     'wealth-2': {
       name: 'Piggy Bank',
@@ -115,6 +126,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.exp,
       modifier: 0.01,
+      tree: 'wealth',
     },
     'wealth-3': {
       name: 'Personal Loan',
@@ -123,6 +135,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.lump,
       modifier: 18000,
+      tree: 'wealth',
     },
     'wealth-4': {
       name: 'Pure Profit',
@@ -131,6 +144,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.mult,
       modifier: 1,
+      tree: 'wealth',
     },
     'wealth-5': {
       name: 'Benjamins',
@@ -139,6 +153,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.add,
       modifier: 100,
+      tree: 'wealth',
     },
     'wealth-6': {
       name: 'Venture Capitalist',
@@ -147,6 +162,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.exp,
       modifier: 0.08,
+      tree: 'wealth',
     },
     'stealth-1': {
       name: 'Cloak',
@@ -155,6 +171,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.mult,
       modifier: 0.25,
+      tree: 'stealth',
     },
     'stealth-2': {
       name: 'Shroud',
@@ -163,6 +180,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.add,
       modifier: 0,
+      tree: 'stealth',
     },
     'stealth-3': {
       name: 'Cover Your Tracks',
@@ -171,6 +189,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.add,
       modifier: 12,
+      tree: 'stealth',
     },
     'stealth-4': {
       name: 'Disappear',
@@ -179,6 +198,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.lump,
       modifier: -9999,
+      tree: 'stealth',
     },
     'stealth-5': {
       name: 'Watchdog',
@@ -187,6 +207,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.add,
       modifier: 24,
+      tree: 'stealth',
     },
     'stealth-6': {
       name: 'Ghost',
@@ -195,6 +216,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.mult,
       modifier: 3,
+      tree: 'stealth',
     },
   };
 
@@ -304,12 +326,6 @@ export class SkillTreeComponent implements OnInit {
 
   // ng-bootstrap modal from https://ng-bootstrap.github.io/#/components/modal/examples
   open(content, event) {
-    if (this.allSkills[event.target.id].purchased) {
-      // disable purchase btn
-      // (document.getElementById(
-      //   'purchaseBtn'
-      // ) as HTMLButtonElement).disabled = true;
-    }
     let selectedSkill = this.allSkills[event.target.id];
     this.skillId = event.target.id;
     this.modalService.open(content, { ariaLabelledBy: 'skill-name' });
