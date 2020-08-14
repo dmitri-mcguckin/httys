@@ -268,9 +268,10 @@ export class SkillTreeComponent implements OnInit {
         this.stealthMod.expMod += skill.modifier;
       }
     }
-    // add: accumulate additive modifier
-    // mult: accumulate multiplicative modifier
-    // exp: accumulate exponential modifier
+  }
+
+  getModifiers() {
+    return [this.infectionMod, this.wealthMod, this.stealthMod];
   }
 
   // payout lump sum skill effect (such as 'gain 20,000 bits (one-time)')
