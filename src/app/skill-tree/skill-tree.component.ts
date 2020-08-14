@@ -7,7 +7,7 @@ enum EffectType {
   lump = 'lump', // lump sum, such as +5000 bits
   add = 'add', // additive, such as +50 bits per second
   mult = 'mult', // multiplicative, such as 25% more bits from all sources = 1.25x
-  compound = 'compound', // compound (exponential), such as gain 2% of your total bits every second
+  exp = 'exp', // exponential, such as gain 2% of your total bits every second
 }
 
 interface Skill {
@@ -15,8 +15,14 @@ interface Skill {
   desc: string;
   cost: number; // cost in terms of skil points
   purchased: boolean; // whether the user has purchased the skill or not
-  effect: EffectType; // the type of effect: lump sum, additive, multiplicative, compound (exponential)
+  effect: EffectType; // the type of effect: lump sum, additive, multiplicative, exponential
   modifier: number; // the modifier for the skill's effect (e.g. 25% = 1.25)
+}
+
+interface SkillMod {
+  addMod: number;
+  multMod: number;
+  expMod: number;
 }
 
 @Component({
@@ -29,7 +35,21 @@ export class SkillTreeComponent implements OnInit {
   skillId: string; // HTML id of a skill
   canPurchase: boolean = false; // if user's # skill points >= skill cost, canPurchase = true
   showTree: boolean = false; // toggle displaying the skill tree
-  // userModifiers:
+  infectionMod: SkillMod = {
+    addMod: 0,
+    multMod: 1,
+    expMod: 1,
+  };
+  wealthMod: SkillMod = {
+    addMod: 0,
+    multMod: 1,
+    expMod: 1,
+  };
+  stealthMod: SkillMod = {
+    addMod: 0,
+    multMod: 1,
+    expMod: 1,
+  };
   allSkills: Record<string, Skill> = {
     // Record of all skills in the skill tree
     'infection-1': {
@@ -77,7 +97,7 @@ export class SkillTreeComponent implements OnInit {
       desc: '+5% of your total bits per second',
       cost: 5,
       purchased: false,
-      effect: EffectType.compound,
+      effect: EffectType.exp,
       modifier: 0.05,
     },
     'wealth-1': {
@@ -93,7 +113,7 @@ export class SkillTreeComponent implements OnInit {
       desc: '+1% of your total dollars per second',
       cost: 1,
       purchased: false,
-      effect: EffectType.compound,
+      effect: EffectType.exp,
       modifier: 0.01,
     },
     'wealth-3': {
@@ -125,7 +145,7 @@ export class SkillTreeComponent implements OnInit {
       desc: '+8% of your total dollars per second',
       cost: 5,
       purchased: false,
-      effect: EffectType.compound,
+      effect: EffectType.exp,
       modifier: 0.08,
     },
     'stealth-1': {
@@ -202,7 +222,7 @@ export class SkillTreeComponent implements OnInit {
   setModifiers(skill) {
     // add: accumulate additive modifier
     // mult: accumulate multiplicative modifier
-    // compound: accumulate compound modifier
+    // exp: accumulate exponential modifier
   }
 
   // payout lump sum skill effect (such as 'gain 20,000 bits (one-time)')
@@ -245,6 +265,24 @@ export class SkillTreeComponent implements OnInit {
     }
   }
 
+  resetMods() {
+    this.infectionMod = {
+      addMod: 0,
+      multMod: 1,
+      expMod: 1,
+    };
+    this.wealthMod = {
+      addMod: 0,
+      multMod: 1,
+      expMod: 1,
+    };
+    this.stealthMod = {
+      addMod: 0,
+      multMod: 1,
+      expMod: 1,
+    };
+  }
+
   resetSkills() {
     let refundedPoints = 0;
 
@@ -261,35 +299,38 @@ export class SkillTreeComponent implements OnInit {
     document.getElementById(
       'skill-points'
     ).innerText = this.skillPoints.toString();
+    this.resetMods();
   }
 
   // ng-bootstrap modal from https://ng-bootstrap.github.io/#/components/modal/examples
   open(content, event) {
     if (this.allSkills[event.target.id].purchased) {
-      this.modalService.dismissAll();
+      // disable purchase btn
+      // (document.getElementById(
+      //   'purchaseBtn'
+      // ) as HTMLButtonElement).disabled = true;
+    }
+    let selectedSkill = this.allSkills[event.target.id];
+    this.skillId = event.target.id;
+    this.modalService.open(content, { ariaLabelledBy: 'skill-name' });
+    document.getElementById('footer-skill-points').innerText =
+      'Skill points available: ' + this.skillPoints.toString();
+    document.getElementById('skill-name').innerText = selectedSkill.name;
+    document.getElementById('skill-desc').innerText = selectedSkill.desc;
+    if (selectedSkill.cost === 1) {
+      document.getElementById('skill-cost').innerText =
+        selectedSkill.cost.toString() + ' skill point';
     } else {
-      let selectedSkill = this.allSkills[event.target.id];
-      this.skillId = event.target.id;
-      this.modalService.open(content, { ariaLabelledBy: 'skill-name' });
-      document.getElementById('footer-skill-points').innerText =
-        'Skill points available: ' + this.skillPoints.toString();
-      document.getElementById('skill-name').innerText = selectedSkill.name;
-      document.getElementById('skill-desc').innerText = selectedSkill.desc;
-      if (selectedSkill.cost === 1) {
-        document.getElementById('skill-cost').innerText =
-          selectedSkill.cost.toString() + ' skill point';
-      } else {
-        document.getElementById('skill-cost').innerText =
-          selectedSkill.cost.toString() + ' skill points';
-      }
+      document.getElementById('skill-cost').innerText =
+        selectedSkill.cost.toString() + ' skill points';
+    }
 
-      if (this.skillPoints >= selectedSkill.cost) {
-        this.canPurchase = true;
-        document.getElementById('footer-skill-points').style.color = 'black';
-      } else {
-        this.canPurchase = false;
-        document.getElementById('footer-skill-points').style.color = 'red';
-      }
+    if (this.skillPoints >= selectedSkill.cost && !selectedSkill.purchased) {
+      this.canPurchase = true;
+      document.getElementById('footer-skill-points').style.color = 'black';
+    } else {
+      this.canPurchase = false;
+      document.getElementById('footer-skill-points').style.color = 'red';
     }
   }
 }
