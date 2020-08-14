@@ -1,6 +1,7 @@
 <div id='hotbar'>
+  <p>${{total_money | number }}</p>
   <div id='bit-grinder'>
-    <h1>bits: {{total_bits}}</h1>
+    <p>{{total_bits}} bits</p>
     <button (click)="grind_bits()">bits4clicks</button>
   </div>
 </div>

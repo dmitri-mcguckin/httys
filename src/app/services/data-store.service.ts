@@ -6,7 +6,10 @@ import { CookieService } from 'ngx-cookie-service';
 })
 
 export class DataStoreService {
-  constructor(private cookie_service: CookieService) {}
+  constructor(private cookie_service: CookieService) {
+    this.cookie_service.set('global_bits', '0');
+    this.cookie_service.set('global_money', '0');
+  }
 
   store_bits(bits: number): void {
     this.cookie_service.set('global_bits', bits.toString());
@@ -19,6 +22,20 @@ export class DataStoreService {
     }
     else {
       return parseInt(global_bits);
+    }
+  }
+
+  store_money(money: number) {
+    this.cookie_service.set('global_money', money.toString());
+  }
+
+  fetch_money(): number {
+    const global_money = this.cookie_service.get('global_money');
+    if(global_money === '') {
+      return 0;
+    }
+    else {
+      return parseInt(global_money);
     }
   }
 }

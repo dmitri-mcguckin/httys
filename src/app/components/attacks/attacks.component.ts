@@ -48,13 +48,6 @@ interface Attack {
   end_time: Date;
 }
 
-interface Contract {
-  provider: string;
-  target: string;
-  created_on: Date;
-  expires_on: Date;
-}
-
 @Component({
   selector: 'attack-pane',
   templateUrl: './attacks.component.html',
@@ -63,13 +56,9 @@ interface Contract {
 
 export class AttackPane implements OnInit {
   event_timer: any;
-  tick_time: number = 1000;
+  tick_time: number = 100;
 
   attack_select_form: FormGroup;
-  contract_form: FormGroup;
-
-  available_contracts: Array<Contract>;
-  show_contracts: boolean = false;
 
   attack_options: Array<string>;
   current_attack: Attack = null;
@@ -83,17 +72,9 @@ export class AttackPane implements OnInit {
       attack: new FormControl(0, Validators.required)
     });
 
-    this.contract_form = new FormGroup({
-      accepted: new FormControl(null, Validators.required)
-    });
-
     this.event_timer = setInterval(() => {
-      console.log(new Date());
+      data_store.store_bits(data_store.fetch_bits() + 1);
     }, this.tick_time);
-  }
-
-  toggle_contracts(): void {
-    this.show_contracts = !this.show_contracts;
   }
 
   toggle_attacks(): void {
@@ -115,7 +96,7 @@ export class AttackPane implements OnInit {
   }
 
   cycle(): void {
-    
+
   }
 
   /**Check if contract is up. Return duration so we can set percetage bar in main page.*/
