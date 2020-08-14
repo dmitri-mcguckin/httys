@@ -1,13 +1,10 @@
-<div class="button-block">
-  <button
-    type="button"
-    class="btn btn-primary"
-    id="skill-tree-btn"
-    (click)="toggleDisplay()"
-  >
-    Skill Tree
-  </button>
-</div>
+<button
+  type="button"
+  class="btn btn-primary"
+  id="skill-tree-btn"
+  (click)="toggleDisplay()">
+  Skill Tree
+</button>
 
 <div [hidden]="!showTree" id="skill-tree-grid">
   <div class="skill-points">
