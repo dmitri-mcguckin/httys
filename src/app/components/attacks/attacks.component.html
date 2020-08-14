@@ -1,0 +1,28 @@
+<button (click)="toggle_contracts()">Contracts</button>
+<button (click)="toggle_attacks()">Attacks</button>
+
+<div *ngIf="show_contracts">
+  <h1>Contracts!</h1>
+</div>
+
+<div *ngIf="show_attacks">
+  <div *ngIf="!attack_active">
+      <form [formGroup]='attack_select_form' (ngSubmit)='initiate_attack()'>
+        <h1>Choose your attack:</h1>
+
+        <select formControlName="attack">
+            <option *ngFor="let attack of attack_options">{{attack}}</option>
+        </select>
+
+        <input class='btn btn-success' type="submit" value='Initiate'>
+      </form>
+  </div>
+
+  <div *ngIf="attack_active">
+    <h1>{{current_attack.name}}</h1>
+
+    <i><p>{{current_attack.description}}</p></i>
+    <p>{{current_attack.percentage }}%</p>
+    <p>{{current_attack.start_time | date: 'short'}}</p>
+  </div>
+</div>

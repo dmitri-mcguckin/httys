@@ -5,8 +5,8 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
+
 export class AppComponent {
-  title = 'httys';
+  short_title = 'httys';
+  long_title = 'How To Train Your Skynet';
 }
-
-
