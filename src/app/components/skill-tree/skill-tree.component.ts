@@ -28,10 +28,11 @@ interface SkillMod {
 }
 
 @Component({
-  selector: 'app-skill-tree',
+  selector: 'skill-tree',
   templateUrl: './skill-tree.component.html',
   styleUrls: ['./skill-tree.component.sass'],
 })
+
 export class SkillTreeComponent implements OnInit {
   skillPoints: number = 2; // user's number of skill points
   skillId: string; // HTML id of a skill
