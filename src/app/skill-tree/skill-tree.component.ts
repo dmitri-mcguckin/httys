@@ -242,6 +242,31 @@ export class SkillTreeComponent implements OnInit {
 
   // set user's modifiers based upon skills known
   setModifiers(skill) {
+    if (skill.tree === 'infection') {
+      if (skill.effect === 'add') {
+        this.infectionMod.addMod += skill.modifier;
+      } else if (skill.effect === 'mult') {
+        this.infectionMod.multMod += skill.modifier;
+      } else {
+        this.infectionMod.expMod += skill.modifier;
+      }
+    } else if (skill.tree === 'wealth') {
+      if (skill.effect === 'add') {
+        this.wealthMod.addMod += skill.modifier;
+      } else if (skill.effect === 'mult') {
+        this.wealthMod.multMod += skill.modifier;
+      } else {
+        this.wealthMod.expMod += skill.modifier;
+      }
+    } else {
+      if (skill.effect === 'add') {
+        this.stealthMod.addMod += skill.modifier;
+      } else if (skill.effect === 'mult') {
+        this.stealthMod.multMod += skill.modifier;
+      } else {
+        this.stealthMod.expMod += skill.modifier;
+      }
+    }
     // add: accumulate additive modifier
     // mult: accumulate multiplicative modifier
     // exp: accumulate exponential modifier
