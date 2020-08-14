@@ -21,7 +21,7 @@ export class currencies implements BitsCurrency{
     /** Generate currency with some randomness based on the parameter random set to 10 by default.
     * Then return the updated curreny back to "main.ts". 
     */
-    generate_currency(currency: number, random: number = 6, reward: number = 3): number {
+    generate_currency(currency: number, random: number = 3, reward: number = 3): number {
         currency += Math.floor(Math.random() * random) + 1;  //genarate random number between 1 and random.
         return currency;
     }
