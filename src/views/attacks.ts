@@ -87,12 +87,13 @@ export class attack implements attacks{
             "January 2019 saw the release of nearly two billion hacked records 1,769,185,063 to be precise." = 2,
             "As much as 38% of malware is now being disguised as a Word document." = 3,
             "In 2018, the cost of the average data breach increased by 6.4% to $3.86 million dollars per breach." = 4,
-            "In 2020, it is estimated that organizations and individuals will pay $11.5 billion, either as a cost of remediating ransomware damage or simply as a cost or paying a ransom." = 5, 
+            "In 2020, it is estimated that organizations and individuals collectively will pay $11.5 billion, either as a cost of remediating ransomware damage or simply as a cost or paying a ransom." = 5, 
             "Since 2015, the ecenomic toll of cybercrime has grown fourfold to $2 trillion USD." = 6, 
             "Cryptojacking malware steals your CPU cycles to mine cryptocurrency, and it's some of the fastest growing malware out there, with 8 million attempts per month at the beginning of 2018." = 7, 
             "About 24,000 malicious apps are blocked every day - a volume that virutally guarantees at least a few malicious apps are getting through." = 8, 
             "A survey of over 4,000 organizations shows that over 70% are unprepared to face down even the most basic attempt at a security breach." = 9, 
         }
+        //source: https://www.safetydetectives.com/blog/malware-statistics/
         let random = Math.floor(Math.random() * (9 - 1) + 1);
 
         attacking.attack_info = info[random];
