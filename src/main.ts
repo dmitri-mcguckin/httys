@@ -6,14 +6,13 @@ import { environment } from './environments/environment';
 import { currencies } from './views/bits-currency';
 import { attacks, attack } from './views/attacks';
 
-
 if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
-
+platformBrowserDynamic()
+  .bootstrapModule(AppModule)
+  .catch((err) => console.error(err));
 
 //var currency: number = 0;
 let currency:currencies = new currencies(0, null, 0);
