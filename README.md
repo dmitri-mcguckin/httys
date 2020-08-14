@@ -2,6 +2,22 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.1.
 
+## Contributors
+
+Bar Movshovich, Dmitri McGuckin, and Ryan Jones
+
+## Description
+
+How To Train Your Skynet is an idle web game where...
+
+## Screenshots
+
+//
+
+## License
+
+This project uses the GNU GENERAL PUBLIC LICENSE (Version 3, 29 June 2007). You can view this license here: `https://github.com/dmitri-mcguckin/httys/blob/master/LICENSE`.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
