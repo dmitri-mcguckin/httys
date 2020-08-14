@@ -27,12 +27,13 @@ interface SkillMod {
   expMod: number; // exponential, such as gain 2% of your total bits every second
 }
 
+interface PathMod {}
+
 @Component({
   selector: 'skill-tree',
   templateUrl: './skill-tree.component.html',
   styleUrls: ['./skill-tree.component.sass'],
 })
-
 export class SkillTreeComponent implements OnInit {
   skillPoints: number = 2; // user's number of skill points
   skillId: string; // HTML id of a skill
@@ -185,21 +186,21 @@ export class SkillTreeComponent implements OnInit {
       tree: 'stealth',
     },
     'stealth-3': {
-      name: 'Cover Your Tracks',
-      desc: '+12 hours to detection buffer (permanently)',
-      cost: 2,
-      purchased: false,
-      effect: EffectType.add,
-      modifier: 12,
-      tree: 'stealth',
-    },
-    'stealth-4': {
       name: 'Disappear',
       desc: 'Reset detection level to 0 (one-time)',
       cost: 2,
       purchased: false,
       effect: EffectType.lump,
       modifier: -9999,
+      tree: 'stealth',
+    },
+    'stealth-4': {
+      name: 'Cover Your Tracks',
+      desc: '+12 hours to detection buffer (permanently)',
+      cost: 2,
+      purchased: false,
+      effect: EffectType.add,
+      modifier: 12,
       tree: 'stealth',
     },
     'stealth-5': {
@@ -213,11 +214,11 @@ export class SkillTreeComponent implements OnInit {
     },
     'stealth-6': {
       name: 'Ghost',
-      desc: '-300% detection',
+      desc: '-100% detection',
       cost: 5,
       purchased: false,
       effect: EffectType.mult,
-      modifier: 3,
+      modifier: 1,
       tree: 'stealth',
     },
   };
