@@ -12,140 +12,147 @@
 <div [hidden]="!showTree" id="skill-tree-grid">
   <div class="skill-points">
     Skill points available: <span id="skill-points"></span>
+    <button
+      class="btn btn-secondary btn-lg float-right"
+      id="resetBtn"
+      (click)="resetSkills()"
+    >
+      Reset
+    </button>
   </div>
   <div class="grid-container" id="path-infection">
     <div class="grid-item path-title">Infection</div>
     <div
-      class="grid-item skill-1"
+      class="grid-item skill skill-1"
       id="infection-1"
       (click)="open(content, $event)"
       data-toggle="tooltip"
-      title="TODO"
+      title=""
     ></div>
     <div
-      class="grid-item skill-2"
+      class="grid-item skill skill-2"
       id="infection-2"
       (click)="open(content, $event)"
       data-toggle="tooltip"
-      title="TODO"
+      title=""
     ></div>
     <div
-      class="grid-item skill-3"
+      class="grid-item skill skill-3"
       id="infection-3"
       (click)="open(content, $event)"
       data-toggle="tooltip"
-      title="TODO"
+      title=""
     ></div>
     <div
-      class="grid-item skill-4"
+      class="grid-item skill skill-4"
       id="infection-4"
       (click)="open(content, $event)"
       data-toggle="tooltip"
-      title="TODO"
+      title=""
     ></div>
     <div
-      class="grid-item skill-5"
+      class="grid-item skill skill-5"
       id="infection-5"
       (click)="open(content, $event)"
       data-toggle="tooltip"
-      title="TODO"
+      title=""
     ></div>
     <div
-      class="grid-item skill-6"
+      class="grid-item skill skill-6"
       id="infection-6"
       (click)="open(content, $event)"
       data-toggle="tooltip"
-      title="TODO"
+      title=""
     ></div>
   </div>
   <div class="grid-container" id="path-wealth">
     <div class="grid-item path-title">Wealth</div>
     <div
-      class="grid-item skill-1"
+      class="grid-item skill skill-1"
       id="wealth-1"
       (click)="open(content, $event)"
       data-toggle="tooltip"
-      title="TODO"
+      title=""
     ></div>
     <div
-      class="grid-item skill-2"
+      class="grid-item skill skill-2"
       id="wealth-2"
       (click)="open(content, $event)"
       data-toggle="tooltip"
-      title="TODO"
+      title=""
     ></div>
     <div
-      class="grid-item skill-3"
+      class="grid-item skill skill-3"
       id="wealth-3"
       (click)="open(content, $event)"
       data-toggle="tooltip"
-      title="TODO"
+      title=""
     ></div>
     <div
-      class="grid-item skill-4"
+      class="grid-item skill skill-4"
       id="wealth-4"
       (click)="open(content, $event)"
       data-toggle="tooltip"
-      title="TODO"
+      title=""
     ></div>
     <div
-      class="grid-item skill-5"
+      class="grid-item skill skill-5"
       id="wealth-5"
       (click)="open(content, $event)"
       data-toggle="tooltip"
-      title="TODO"
+      title=""
     ></div>
     <div
-      class="grid-item skill-6"
+      class="grid-item skill skill-6"
       id="wealth-6"
       (click)="open(content, $event)"
       data-toggle="tooltip"
-      title="TODO"
+      title=""
     ></div>
   </div>
   <div class="grid-container" id="path-stealth">
     <div class="grid-item path-title">Stealth</div>
     <div
-      class="grid-item skill-1"
+      class="grid-item skill skill-1"
       id="stealth-1"
       (click)="open(content, $event)"
       data-toggle="tooltip"
-      title="TODO"
+      title=""
     ></div>
     <div
-      class="grid-item skill-2"
+      class="grid-item skill skill-2"
       id="stealth-2"
       (click)="open(content, $event)"
       data-toggle="tooltip"
-      title="TODO"
+      title=""
     ></div>
     <div
-      class="grid-item skill-3"
+      class="grid-item skill skill-3"
       id="stealth-3"
       (click)="open(content, $event)"
       data-toggle="tooltip"
-      title="TODO"
+      title=""
     ></div>
     <div
-      class="grid-item skill-4"
+      class="grid-item skill skill-4"
       id="stealth-4"
       (click)="open(content, $event)"
       data-toggle="tooltip"
-      title="TODO"
+      title=""
     ></div>
     <div
-      class="grid-item skill-5"
+      class="grid-item skill skill-5"
       id="stealth-5"
       (click)="open(content, $event)"
       data-toggle="tooltip"
-      title="TODO"
+      title=""
     ></div>
     <div
-      class="grid-item skill-6"
+      class="grid-item skill skill-6"
       id="stealth-6"
       (click)="open(content, $event)"
       data-toggle="tooltip"
-      title="TODO"
+      title=""
     ></div>
   </div>
   <br />
@@ -182,8 +189,7 @@
         disabled
         class="btn btn-outline-secondary"
         id="purchaseBtn"
-        data-toggle="tooltip"
-        title="Insufficient skill points"
+        tooltip="Insufficient skill points"
       >
         Purchase
       </button>
