@@ -51,9 +51,8 @@ interface Attack {
 @Component({
   selector: 'attack-pane',
   templateUrl: './attacks.component.html',
-  styleUrls: ['./attacks.component.sass']
+  styleUrls: ['./attacks.component.sass'],
 })
-
 export class AttackPane implements OnInit {
   event_timer: any;
   tick_time: number = 100;
@@ -69,13 +68,13 @@ export class AttackPane implements OnInit {
     this.attack_options = Object.keys(attacks);
 
     this.attack_select_form = new FormGroup({
-      attack: new FormControl(0, Validators.required)
+      attack: new FormControl(0, Validators.required),
     });
 
     this.event_timer = setInterval(() => {
       data_store.store_bits(data_store.fetch_bits() + 1);
       //data_store.store_attack_percentage(data_store.fetch_percentage();
-      if(this.current_attack != null){
+      if (this.current_attack != null) {
         this.attack_percentage();
       }
     }, this.tick_time);
@@ -93,22 +92,28 @@ export class AttackPane implements OnInit {
       description: this.genearte_random_tooltip(),
       percentage: 0,
       start_time: new Date(),
-      end_time: this.get_final_time()
-    }
+      end_time: this.get_final_time(),
+    };
 
     this.attack_active = true;
   }
 
-  attack_percentage(): void{
-    let current = new Date().getTime();  //get current time in seconds. 
+  attack_percentage(): void {
+    let current = new Date().getTime(); //get current time in seconds.
 
-    if(this.current_attack.percentage < 100){
+    if (this.current_attack.percentage < 100) {
       let completed = current - this.current_attack.start_time.getTime(); //get time since start time.
-      this.current_attack.percentage = Math.floor((completed/1000)/(this.current_attack.end_time)); //compare start time against end time.
-      this.data_store.store_attack_percentage(this.data_store.fetch_percentage());
+      this.current_attack.percentage = Math.floor(
+        completed / 1000 / this.current_attack.end_time
+      ); //compare start time against end time.
+      this.data_store.store_attack_percentage(
+        this.data_store.fetch_percentage()
+      );
 
-      if(this.current_attack.percentage >= 100){
-        this.data_store.store_bits(this.data_store.fetch_bits() + this.reward());
+      if (this.current_attack.percentage >= 100) {
+        this.data_store.store_bits(
+          this.data_store.fetch_bits() + this.reward()
+        );
         this.current_attack.percentage == 0;
         this.current_attack == null;
         this.attack_active = false;
@@ -116,14 +121,12 @@ export class AttackPane implements OnInit {
     }
   }
 
-  cycle(): void {
+  cycle(): void {}
 
-  }
-
-  get_final_time():number {
+  get_final_time(): number {
     let random = Math.floor(Math.random() * 500) + 1000;
     let time = new Date(random); //conert milliseconds to seconds.
-    return (time.getTime()/1000); //convert milliseconds to seconds.
+    return time.getTime() / 1000; //convert milliseconds to seconds.
   }
 
   /**Check if contract is up. Return duration so we can set percetage bar in main page.*/
@@ -142,17 +145,16 @@ export class AttackPane implements OnInit {
   //     }
   // }
 
-  reward(){
-      let reward = Math.floor(Math.random() * 500) + 1; //genearte a random number between 1 and 100.
-      return reward;
+  reward() {
+    let reward = Math.floor(Math.random() * 500) + 1; //genearte a random number between 1 and 100.
+    return reward;
   }
-
 
   /**Give random attack info per attack. */
   genearte_random_tooltip(): string {
-      //source: https://www.safetydetectives.com/blog/malware-statistics/
-      const index = Math.floor(Math.random() * (9 - 1) + 1);
-      return tooltips[index];
+    //source: https://www.safetydetectives.com/blog/malware-statistics/
+    const index = Math.floor(Math.random() * (9 - 1) + 1);
+    return tooltips[index];
   }
 
   ngOnInit(): void {}

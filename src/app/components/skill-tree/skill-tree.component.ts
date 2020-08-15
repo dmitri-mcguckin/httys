@@ -2,6 +2,7 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DataStoreService } from 'src/app/services/data-store.service';
 
 enum EffectType {
   TODO = 'TODO',
@@ -11,32 +12,42 @@ enum EffectType {
   exp = 'exp', // exponential, such as gain 2% of your total bits every second
 }
 
-interface Skill {
+export interface Skill {
   name: string;
   desc: string;
   cost: number; // cost in terms of skil points
   purchased: boolean; // whether the user has purchased the skill or not
   effect: EffectType; // the type of effect: lump sum, additive, multiplicative, exponential
   modifier: number; // the modifier for the skill's effect (e.g. 25% = 1.25)
+  tree: number; // "infection", "wealth", or "stealth"
 }
 
-interface SkillMod {
-  addMod: number;
-  multMod: number;
-  expMod: number;
+export interface SkillMod {
+  addMod: number; // additive, such as +50 bits per second
+  multMod: number; // multiplicative, such as 25% more bits from all sources = 1.25x
+  expMod: number; // exponential, such as gain 2% of your total bits every second
 }
+
+// interface PathMod {
+//   infection: SkillMod;
+//   wealth: SkillMod;
+//   stealth: SkillMod;
+// }
 
 @Component({
   selector: 'skill-tree',
   templateUrl: './skill-tree.component.html',
   styleUrls: ['./skill-tree.component.sass'],
 })
-
 export class SkillTreeComponent implements OnInit {
   skillPoints: number = 2; // user's number of skill points
   skillId: string; // HTML id of a skill
   canPurchase: boolean = false; // if user's # skill points >= skill cost, canPurchase = true
   showTree: boolean = false; // toggle displaying the skill tree
+  // pathMod: PathMod = {
+  // };
+
+  // modifiers for each of the three skill trees (Infection, Wealth, and Stealth)
   infectionMod: SkillMod = {
     addMod: 0,
     multMod: 1,
@@ -52,8 +63,11 @@ export class SkillTreeComponent implements OnInit {
     multMod: 1,
     expMod: 1,
   };
+
+  pathMods: SkillMod[] = [this.infectionMod, this.wealthMod, this.stealthMod];
+
+  // a Record of all skills in the skill tree
   allSkills: Record<string, Skill> = {
-    // Record of all skills in the skill tree
     'infection-1': {
       name: 'Bit Accumulator',
       desc: '+50 bits per second',
@@ -61,6 +75,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.add,
       modifier: 50,
+      tree: 0,
     },
     'infection-2': {
       name: 'Bit Bundle',
@@ -69,6 +84,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.lump,
       modifier: 20000,
+      tree: 0,
     },
     'infection-3': {
       name: 'Bit Miner',
@@ -77,6 +93,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.add,
       modifier: 150,
+      tree: 0,
     },
     'infection-4': {
       name: 'Bit Bonanza',
@@ -85,6 +102,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.lump,
       modifier: 75000,
+      tree: 0,
     },
     'infection-5': {
       name: 'Bit Frenzy',
@@ -93,6 +111,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.mult,
       modifier: 1,
+      tree: 0,
     },
     'infection-6': {
       name: 'Bit Emperor',
@@ -101,6 +120,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.exp,
       modifier: 0.05,
+      tree: 0,
     },
     'wealth-1': {
       name: 'Coin Collector',
@@ -109,6 +129,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.add,
       modifier: 5,
+      tree: 1,
     },
     'wealth-2': {
       name: 'Piggy Bank',
@@ -117,6 +138,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.exp,
       modifier: 0.01,
+      tree: 1,
     },
     'wealth-3': {
       name: 'Personal Loan',
@@ -125,6 +147,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.lump,
       modifier: 18000,
+      tree: 1,
     },
     'wealth-4': {
       name: 'Pure Profit',
@@ -133,6 +156,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.mult,
       modifier: 1,
+      tree: 1,
     },
     'wealth-5': {
       name: 'Benjamins',
@@ -141,6 +165,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.add,
       modifier: 100,
+      tree: 1,
     },
     'wealth-6': {
       name: 'Venture Capitalist',
@@ -149,6 +174,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.exp,
       modifier: 0.08,
+      tree: 1,
     },
     'stealth-1': {
       name: 'Cloak',
@@ -157,6 +183,7 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.mult,
       modifier: 0.25,
+      tree: 2,
     },
     'stealth-2': {
       name: 'Shroud',
@@ -165,22 +192,25 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.add,
       modifier: 0,
+      tree: 2,
     },
     'stealth-3': {
-      name: 'Cover Your Tracks',
-      desc: '+12 hours to detection buffer (permanently)',
-      cost: 2,
-      purchased: false,
-      effect: EffectType.add,
-      modifier: 12,
-    },
-    'stealth-4': {
       name: 'Disappear',
       desc: 'Reset detection level to 0 (one-time)',
       cost: 2,
       purchased: false,
       effect: EffectType.lump,
       modifier: -9999,
+      tree: 2,
+    },
+    'stealth-4': {
+      name: 'Cover Your Tracks',
+      desc: '+12 hours to detection buffer (permanently)',
+      cost: 2,
+      purchased: false,
+      effect: EffectType.add,
+      modifier: 12,
+      tree: 2,
     },
     'stealth-5': {
       name: 'Watchdog',
@@ -189,19 +219,68 @@ export class SkillTreeComponent implements OnInit {
       purchased: false,
       effect: EffectType.add,
       modifier: 24,
+      tree: 2,
     },
     'stealth-6': {
       name: 'Ghost',
-      desc: '-300% detection',
+      desc: '-100% detection',
       cost: 5,
       purchased: false,
       effect: EffectType.mult,
-      modifier: 3,
+      modifier: 1,
+      tree: 2,
     },
   };
 
+  event_timer: any;
+  tick_time: number = 1000;
+
   //
-  constructor(private modalService: NgbModal) {}
+  constructor(
+    private modalService: NgbModal,
+    private data_store: DataStoreService
+  ) {
+    if (data_store.fetch_skills() != '') {
+      this.allSkills = JSON.parse(data_store.fetch_skills());
+      // for (let i = 0; i < 18; i++) {
+      //   let currSkill = this.allSkills[i];
+      //   if (currSkill.purchased === true) {
+      //     document.getElementById(i)
+      //     if (currSkill.tree === 0) {
+      //       currSkill.style.backgroundColor = 'maroon';
+      //     } else if (currSkill.tree === 1) {
+      //       currSkill.style.backgroundColor = 'green';
+      //     } else {
+      //       currSkill.style.backgroundColor = 'blue';
+      //     }
+      //   }
+      // }
+    }
+    if (data_store.fetch_mods() != '') {
+      this.pathMods = JSON.parse(data_store.fetch_mods());
+    }
+
+    this.event_timer = setInterval(() => {
+      let bits =
+        (data_store.fetch_bits() + 1 + this.pathMods[0].addMod) *
+        this.pathMods[0].multMod;
+      bits *= this.pathMods[0].expMod;
+      data_store.store_bits(bits);
+
+      let money =
+        (data_store.fetch_money() + 1 + this.pathMods[1].addMod) *
+        this.pathMods[1].multMod;
+      money *= this.pathMods[1].expMod;
+      data_store.store_money(money);
+
+      let detection =
+        (data_store.fetch_detection() + 1 + this.pathMods[2].addMod) *
+        this.pathMods[2].multMod;
+      detection *= this.pathMods[2].expMod;
+      data_store.store_detection(detection);
+      //data_store.store_attack_percentage(data_store.fetch_percentage();
+    }, this.tick_time);
+  }
 
   ngOnInit(): void {
     this.setTooltips();
@@ -222,13 +301,34 @@ export class SkillTreeComponent implements OnInit {
 
   // set user's modifiers based upon skills known
   setModifiers(skill) {
-    // add: accumulate additive modifier
-    // mult: accumulate multiplicative modifier
-    // exp: accumulate exponential modifier
+    if (skill.effect === 'add') {
+      this.pathMods[skill.tree].addMod += skill.modifier;
+    } else if (skill.effect === 'mult') {
+      this.pathMods[skill.tree].multMod += skill.modifier;
+    } else {
+      this.pathMods[skill.tree].expMod += skill.modifier;
+    }
+
+    this.data_store.store_mods(JSON.stringify(this.pathMods));
   }
 
   // payout lump sum skill effect (such as 'gain 20,000 bits (one-time)')
-  setLumpSum(skill) {}
+  setLumpSum(skill) {
+    if (skill.tree === 0) {
+      // infection
+      this.data_store.store_bits(this.data_store.fetch_bits() + skill.modifier);
+    } else if (skill.tree === 1) {
+      // wealth
+      this.data_store.store_money(
+        this.data_store.fetch_money() + skill.modifier
+      );
+    } else {
+      // stealth
+      this.data_store.store_detection(
+        this.data_store.fetch_detection() + skill.modifier
+      );
+    }
+  }
 
   // From: https://www.encodedna.com/angular/how-to-show-hide-or-toggle-elements-in-angular-4.htm
   toggleDisplay() {
@@ -265,24 +365,28 @@ export class SkillTreeComponent implements OnInit {
     } else {
       this.setLumpSum(this.allSkills[this.skillId]);
     }
+
+    this.data_store.store_skills(JSON.stringify(this.allSkills));
   }
 
   resetMods() {
-    this.infectionMod = {
+    this.pathMods[0] = this.infectionMod = {
       addMod: 0,
       multMod: 1,
       expMod: 1,
     };
-    this.wealthMod = {
+    this.pathMods[1] = this.wealthMod = {
       addMod: 0,
       multMod: 1,
       expMod: 1,
     };
-    this.stealthMod = {
+    this.pathMods[2] = this.stealthMod = {
       addMod: 0,
       multMod: 1,
       expMod: 1,
     };
+
+    this.data_store.store_mods(JSON.stringify(this.pathMods));
   }
 
   resetSkills() {
@@ -302,16 +406,11 @@ export class SkillTreeComponent implements OnInit {
       'skill-points'
     ).innerText = this.skillPoints.toString();
     this.resetMods();
+    this.data_store.store_skills(JSON.stringify(this.allSkills));
   }
 
   // ng-bootstrap modal from https://ng-bootstrap.github.io/#/components/modal/examples
   open(content, event) {
-    if (this.allSkills[event.target.id].purchased) {
-      // disable purchase btn
-      // (document.getElementById(
-      //   'purchaseBtn'
-      // ) as HTMLButtonElement).disabled = true;
-    }
     let selectedSkill = this.allSkills[event.target.id];
     this.skillId = event.target.id;
     this.modalService.open(content, { ariaLabelledBy: 'skill-name' });
