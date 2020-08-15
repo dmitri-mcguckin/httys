@@ -10,17 +10,17 @@ import {
 })
 export class DataStoreService {
   constructor(private cookie_service: CookieService) {
-    this.cookie_service.set('global_bits', '0');
-    this.cookie_service.set('global_money', '0');
-    this.cookie_service.set('global_detection', '0');
-    this.cookie_service.set('global_detection_max', '86400');
-    this.cookie_service.set('global_skills', '');
-    this.cookie_service.set('global_mods', '');
-    this.cookie_service.set('attack_percentage', '0');
+    // this.cookie_service.set('global_bits', '0', 99999);
+    // this.cookie_service.set('global_money', '0', 99999);
+    // this.cookie_service.set('global_detection', '0', 99999);
+    // this.cookie_service.set('global_detection_max', '86400', 99999);
+    // this.cookie_service.set('global_skills', '', 99999);
+    // this.cookie_service.set('global_mods', '', 99999);
+    // this.cookie_service.set('attack_percentage', '0', 99999);
   }
 
   store_bits(bits: number): void {
-    this.cookie_service.set('global_bits', bits.toString());
+    this.cookie_service.set('global_bits', bits.toString(), 99999);
   }
 
   fetch_bits(): number {
@@ -33,11 +33,11 @@ export class DataStoreService {
   }
 
   store_attack_percentage(percentage: number): void {
-    this.cookie_service.set('attack_percentage', percentage.toString());
+    this.cookie_service.set('attack_percentage', percentage.toString(), 99999);
   }
 
   store_money(money: number) {
-    this.cookie_service.set('global_money', money.toString());
+    this.cookie_service.set('global_money', money.toString(), 99999);
   }
 
   fetch_money(): number {
@@ -50,7 +50,7 @@ export class DataStoreService {
   }
 
   store_detection(detection: number) {
-    this.cookie_service.set('global_detection', detection.toString());
+    this.cookie_service.set('global_detection', detection.toString(), 99999);
   }
 
   fetch_detection(): number {
@@ -63,7 +63,11 @@ export class DataStoreService {
   }
 
   store_detection_max(detection_max: number) {
-    this.cookie_service.set('global_detection_max', detection_max.toString());
+    this.cookie_service.set(
+      'global_detection_max',
+      detection_max.toString(),
+      99999
+    );
   }
 
   fetch_detection_max(): number {
@@ -78,7 +82,7 @@ export class DataStoreService {
   }
 
   store_skills(skillsJSON: string) {
-    this.cookie_service.set('global_skills', skillsJSON);
+    this.cookie_service.set('global_skills', skillsJSON, 99999);
   }
 
   fetch_skills(): string {
@@ -86,7 +90,7 @@ export class DataStoreService {
   }
 
   store_mods(modsJSON: string) {
-    this.cookie_service.set('global_mods', modsJSON);
+    this.cookie_service.set('global_mods', modsJSON, 99999);
   }
 
   fetch_mods(): string {

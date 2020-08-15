@@ -240,7 +240,6 @@ export class SkillTreeComponent implements OnInit {
     if (data_store.fetch_skills() != '') {
       this.allSkills = JSON.parse(data_store.fetch_skills());
     }
-    alert(this.allSkills['infection-1'].purchased);
     if (data_store.fetch_mods() != '') {
       this.pathMods = JSON.parse(data_store.fetch_mods());
     }
