@@ -1,0 +1,44 @@
+name: HTTYS build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: NodeJS ${{ matrix.node-version }} on ${{ matrix.os }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Switch to build branch
+        run: git checkout -B build
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli@latest
+
+      - name: Build
+        run: ng build --prod
+
+      - name: Strip repo to build only
+        run: |
+          mv dest/ ..
+          rm -rf *
+          mv ../dest/httys/* .
+          rm -rf ../dest
+
+      - name: Push to build branch
+        run: git push --set-upstream origin build

@@ -16,6 +16,7 @@ export class DataStoreService {
     this.cookie_service.set('global_detection_max', '86400');
     this.cookie_service.set('global_skills', '');
     this.cookie_service.set('global_mods', '');
+    this.cookie_service.set('attack_percentage', '0');
   }
 
   store_bits(bits: number): void {
@@ -29,6 +30,10 @@ export class DataStoreService {
     } else {
       return parseInt(global_bits);
     }
+  }
+
+  store_attack_percentage(percentage: number): void {
+    this.cookie_service.set('attack_percentage', percentage.toString());
   }
 
   store_money(money: number) {
@@ -86,5 +91,13 @@ export class DataStoreService {
 
   fetch_mods(): string {
     return this.cookie_service.get('global_mods');
+  }
+  fetch_percentage(): number {
+    const global_percengae = this.cookie_service.get('attack_percentage');
+    if (global_percengae === '') {
+      return 0;
+    } else {
+      return parseInt(global_percengae);
+    }
   }
 }

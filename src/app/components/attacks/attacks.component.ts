@@ -45,7 +45,7 @@ interface Attack {
   description: string;
   percentage: number;
   start_time: Date;
-  end_time: Date;
+  end_time: number;
 }
 
 @Component({
@@ -73,6 +73,10 @@ export class AttackPane implements OnInit {
 
     this.event_timer = setInterval(() => {
       data_store.store_bits(data_store.fetch_bits() + 1);
+      //data_store.store_attack_percentage(data_store.fetch_percentage();
+      if (this.current_attack != null) {
+        this.attack_percentage();
+      }
     }, this.tick_time);
   }
 
@@ -88,13 +92,42 @@ export class AttackPane implements OnInit {
       description: this.genearte_random_tooltip(),
       percentage: 0,
       start_time: new Date(),
-      end_time: null,
+      end_time: this.get_final_time(),
     };
 
     this.attack_active = true;
   }
 
+  attack_percentage(): void {
+    let current = new Date().getTime(); //get current time in seconds.
+
+    if (this.current_attack.percentage < 100) {
+      let completed = current - this.current_attack.start_time.getTime(); //get time since start time.
+      this.current_attack.percentage = Math.floor(
+        completed / 1000 / this.current_attack.end_time
+      ); //compare start time against end time.
+      this.data_store.store_attack_percentage(
+        this.data_store.fetch_percentage()
+      );
+
+      if (this.current_attack.percentage >= 100) {
+        this.data_store.store_bits(
+          this.data_store.fetch_bits() + this.reward()
+        );
+        this.current_attack.percentage == 0;
+        this.current_attack == null;
+        this.attack_active = false;
+      }
+    }
+  }
+
   cycle(): void {}
+
+  get_final_time(): number {
+    let random = Math.floor(Math.random() * 500) + 1000;
+    let time = new Date(random); //conert milliseconds to seconds.
+    return time.getTime() / 1000; //convert milliseconds to seconds.
+  }
 
   /**Check if contract is up. Return duration so we can set percetage bar in main page.*/
   // check_time(currency: currencies, attacking: attacks): number {
