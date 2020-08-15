@@ -1,9 +1,8 @@
 # How To Train Your Skynet (HTTYS)
 
-An idle-game about being an e1337 hacker and training viruses to take over the world.
-
-// TODO: Add more description
-
+An idle-game about being an e1337 hacker and training viruses to take over the world. The game features an attack system, a contract system, and a skill-tree system.
+You will be able to acquire contracts that require certain attacks to be executed. Once an attack has reached 100% you will be rewarded with more bits. Use your bits
+and money to buy skill points that can be used to further increase your Skynet's abilities such as faster bit generation and detection avoidance. 
 
 ## Live Demo
 
