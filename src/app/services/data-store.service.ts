@@ -104,4 +104,17 @@ export class DataStoreService {
       return parseInt(global_percengae);
     }
   }
+
+  store_points(points: number) {
+    this.cookie_service.set('global_points', points.toString());
+  }
+
+  fetch_points(): number {
+    const global_points = this.cookie_service.get('global_points');
+    if (global_points === '') {
+      return 2;
+    } else {
+      return parseInt(global_points);
+    }
+  }
 }

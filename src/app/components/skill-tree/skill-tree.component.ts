@@ -40,7 +40,7 @@ export interface SkillMod {
   styleUrls: ['./skill-tree.component.sass'],
 })
 export class SkillTreeComponent implements OnInit {
-  skillPoints: number = 2; // user's number of skill points
+  skillPoints: number; // user's number of skill points
   skillId: string; // HTML id of a skill
   canPurchase: boolean = false; // if user's # skill points >= skill cost, canPurchase = true
   showTree: boolean = false; // toggle displaying the skill tree
@@ -234,6 +234,8 @@ export class SkillTreeComponent implements OnInit {
 
   event_timer: any;
   tick_time: number = 1000;
+  points_event_timer: any;
+  points_tick_time: number = 30000;
 
   //
   constructor(
@@ -242,23 +244,11 @@ export class SkillTreeComponent implements OnInit {
   ) {
     if (data_store.fetch_skills() != '') {
       this.allSkills = JSON.parse(data_store.fetch_skills());
-      // for (let i = 0; i < 18; i++) {
-      //   let currSkill = this.allSkills[i];
-      //   if (currSkill.purchased === true) {
-      //     document.getElementById(i)
-      //     if (currSkill.tree === 0) {
-      //       currSkill.style.backgroundColor = 'maroon';
-      //     } else if (currSkill.tree === 1) {
-      //       currSkill.style.backgroundColor = 'green';
-      //     } else {
-      //       currSkill.style.backgroundColor = 'blue';
-      //     }
-      //   }
-      // }
     }
     if (data_store.fetch_mods() != '') {
       this.pathMods = JSON.parse(data_store.fetch_mods());
     }
+    this.skillPoints = data_store.fetch_points();
 
     this.event_timer = setInterval(() => {
       let bits =
@@ -280,10 +270,31 @@ export class SkillTreeComponent implements OnInit {
       data_store.store_detection(detection);
       //data_store.store_attack_percentage(data_store.fetch_percentage();
     }, this.tick_time);
+
+    this.points_event_timer = setInterval(() => {
+      data_store.store_points(data_store.fetch_points() + 1);
+    }, this.points_tick_time);
   }
 
   ngOnInit(): void {
     this.setTooltips();
+    this.setSkillColors();
+  }
+
+  setSkillColors() {
+    for (let key in this.allSkills) {
+      let skill = this.allSkills[key];
+      let div = document.getElementById(key);
+      if (skill.purchased) {
+        if (skill.tree === 0) {
+          div.style.backgroundColor = 'maroon';
+        } else if (skill.tree === 1) {
+          div.style.backgroundColor = 'green';
+        } else {
+          div.style.backgroundColor = 'blue';
+        }
+      }
+    }
   }
 
   // set each skill'1 tooltip to include name and description
@@ -346,6 +357,7 @@ export class SkillTreeComponent implements OnInit {
   purchaseSkill() {
     this.allSkills[this.skillId].purchased = true;
     this.skillPoints -= this.allSkills[this.skillId].cost;
+    this.data_store.store_points(this.data_store.fetch_points());
     document.getElementById('footer-skill-points').innerText =
       'Skill points available: ' + this.skillPoints.toString();
     document.getElementById(
@@ -370,21 +382,16 @@ export class SkillTreeComponent implements OnInit {
   }
 
   resetMods() {
-    this.pathMods[0] = this.infectionMod = {
-      addMod: 0,
-      multMod: 1,
-      expMod: 1,
-    };
-    this.pathMods[1] = this.wealthMod = {
-      addMod: 0,
-      multMod: 1,
-      expMod: 1,
-    };
-    this.pathMods[2] = this.stealthMod = {
-      addMod: 0,
-      multMod: 1,
-      expMod: 1,
-    };
+    this.pathMods[0].addMod = 0;
+    this.pathMods[0].multMod = 1;
+    this.pathMods[0].expMod = 1;
+    this.pathMods[1].addMod = 0;
+    this.pathMods[1].multMod = 1;
+    this.pathMods[1].addMod = 1;
+
+    this.pathMods[2].addMod = 0;
+    this.pathMods[2].multMod = 1;
+    this.pathMods[2].expMod = 1;
 
     this.data_store.store_mods(JSON.stringify(this.pathMods));
   }
@@ -402,6 +409,7 @@ export class SkillTreeComponent implements OnInit {
     }
 
     this.skillPoints += refundedPoints;
+    this.data_store.store_points(this.skillPoints);
     document.getElementById(
       'skill-points'
     ).innerText = this.skillPoints.toString();
