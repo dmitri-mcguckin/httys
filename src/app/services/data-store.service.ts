@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
+import {
+  Skill,
+  SkillMod,
+} from 'src/app/components/skill-tree/skill-tree.component';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +14,8 @@ export class DataStoreService {
     this.cookie_service.set('global_money', '0');
     this.cookie_service.set('global_detection', '0');
     this.cookie_service.set('global_detection_max', '86400');
+    this.cookie_service.set('global_skills', '');
+    this.cookie_service.set('global_mods', '');
   }
 
   store_bits(bits: number): void {
@@ -64,5 +70,21 @@ export class DataStoreService {
     } else {
       return parseInt(global_detection_max);
     }
+  }
+
+  store_skills(skillsJSON: string) {
+    this.cookie_service.set('global_skills', skillsJSON);
+  }
+
+  fetch_skills(): string {
+    return this.cookie_service.get('global_skills');
+  }
+
+  store_mods(modsJSON: string) {
+    this.cookie_service.set('global_mods', modsJSON);
+  }
+
+  fetch_mods(): string {
+    return this.cookie_service.get('global_mods');
   }
 }
