@@ -232,6 +232,9 @@ export class SkillTreeComponent implements OnInit {
     },
   };
 
+  event_timer: any;
+  tick_time: number = 1000;
+
   //
   constructor(
     private modalService: NgbModal,
@@ -239,10 +242,44 @@ export class SkillTreeComponent implements OnInit {
   ) {
     if (data_store.fetch_skills() != '') {
       this.allSkills = JSON.parse(data_store.fetch_skills());
+      // for (let i = 0; i < 18; i++) {
+      //   let currSkill = this.allSkills[i];
+      //   if (currSkill.purchased === true) {
+      //     document.getElementById(i)
+      //     if (currSkill.tree === 0) {
+      //       currSkill.style.backgroundColor = 'maroon';
+      //     } else if (currSkill.tree === 1) {
+      //       currSkill.style.backgroundColor = 'green';
+      //     } else {
+      //       currSkill.style.backgroundColor = 'blue';
+      //     }
+      //   }
+      // }
     }
     if (data_store.fetch_mods() != '') {
       this.pathMods = JSON.parse(data_store.fetch_mods());
     }
+
+    this.event_timer = setInterval(() => {
+      let bits =
+        (data_store.fetch_bits() + 1 + this.pathMods[0].addMod) *
+        this.pathMods[0].multMod;
+      bits *= this.pathMods[0].expMod;
+      data_store.store_bits(bits);
+
+      let money =
+        (data_store.fetch_money() + 1 + this.pathMods[1].addMod) *
+        this.pathMods[1].multMod;
+      money *= this.pathMods[1].expMod;
+      data_store.store_money(money);
+
+      let detection =
+        (data_store.fetch_detection() + 1 + this.pathMods[2].addMod) *
+        this.pathMods[2].multMod;
+      detection *= this.pathMods[2].expMod;
+      data_store.store_detection(detection);
+      //data_store.store_attack_percentage(data_store.fetch_percentage();
+    }, this.tick_time);
   }
 
   ngOnInit(): void {
