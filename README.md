@@ -1,43 +1,69 @@
-# Httys
+# How To Train Your Skynet (HTTYS)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.1.
+An idle-game about being an e1337 hacker and training viruses to take over the world.
 
-## Contributors
+// TODO: Add more description
 
-Bar Movshovich, Dmitri McGuckin, and Ryan Jones
 
-## Description
+## Live Demo
 
-How To Train Your Skynet is an idle web game where...
-
-## Screenshots
-
-//
+You can play the game on our [live demo server](https://httys.mandatoryfun.xyz)
 
 ## License
 
-This project uses the GNU GENERAL PUBLIC LICENSE (Version 3, 29 June 2007). You can view this license here: `https://github.com/dmitri-mcguckin/httys/blob/master/LICENSE`.
+This project uses the [GNU GPL v3](LICENSE).
 
-## Development server
+## Authors
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+* Bar Movshovich
+* Dmitri McGuckin
+* Ryan Jones
 
-## Code scaffolding
+## Screenshots
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+![Skill Tree](docs/1.png)
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Development and Contribution
 
-## Running unit tests
+### Clone the Repo
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+`git clone https://github.com/dmitri-mcguckin/httys`
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+### Install dependencies
 
-## Further help
+`$` `npm install --save`
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+### Start the Development Server:
+
+`$` `ng serve --open`
+
+*(The server starts on http://localhost:4200 and will automatically reload on source file changes.)*
+
+### Build
+
+`$` `ng build --prod`
+
+### Unit Tests
+
+`$` `ng test`
+
+Tests are run with [Karma](https://karma-runner.github.io).
+
+### End-to-end Tests
+
+`$` `ng e2e`
+
+Tests are run with [Protractor](http://www.protractortest.org/).
+
+### Further help
+
+**Angular Help:**
+
+`$` `ng help`
+
+
+**Issues Board:**
+
+[Issue Tracking board](https://github.com/dmitri-mcguckin/httys/issues)
