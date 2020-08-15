@@ -9,6 +9,7 @@ export class DataStoreService {
   constructor(private cookie_service: CookieService) {
     this.cookie_service.set('global_bits', '0');
     this.cookie_service.set('global_money', '0');
+    this.cookie_service.set('attack_percentage', '0');
   }
 
   store_bits(bits: number): void {
@@ -25,6 +26,10 @@ export class DataStoreService {
     }
   }
 
+  store_attack_percentage(percentage: number): void{
+    this.cookie_service.set('attack_percentage', percentage.toString());
+  }
+
   store_money(money: number) {
     this.cookie_service.set('global_money', money.toString());
   }
@@ -36,6 +41,16 @@ export class DataStoreService {
     }
     else {
       return parseInt(global_money);
+    }
+  }
+
+  fetch_percentage(): number {
+    const global_percengae = this.cookie_service.get('attack_percentage');
+    if(global_percengae === ''){
+      return 0;
+    }
+    else{
+      return parseInt(global_percengae);
     }
   }
 }
