@@ -2,13 +2,15 @@
   type="button"
   class="btn btn-primary"
   id="skill-tree-btn"
-  (click)="toggleDisplay()">
+  (click)="toggleDisplay()"
+>
   Skill Tree
 </button>
 
 <div [hidden]="!showTree" id="skill-tree-grid">
-  <div class="skill-points">
-    Skill points available: <span id="skill-points"></span>
+  <div class="skill-points" style="color: black;">
+    Skill points available:
+    <span id="skill-points"></span>
     <button
       class="btn btn-secondary btn-lg float-right"
       id="resetBtn"
