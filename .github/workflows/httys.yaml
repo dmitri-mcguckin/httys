@@ -41,4 +41,7 @@ jobs:
           rm -rf ../dist
 
       - name: Push to build branch
-        run: git push -f --set-upstream origin build
+        run: |
+          git add -A
+          git commit -am "Build"
+          git push -f --set-upstream origin build
