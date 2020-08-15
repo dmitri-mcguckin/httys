@@ -75,7 +75,9 @@ export class AttackPane implements OnInit {
     this.event_timer = setInterval(() => {
       data_store.store_bits(data_store.fetch_bits() + 1);
       //data_store.store_attack_percentage(data_store.fetch_percentage();
-      this.attack_percentage();
+      if(this.current_attack != null){
+        this.attack_percentage();
+      }
     }, this.tick_time);
   }
 
@@ -99,10 +101,19 @@ export class AttackPane implements OnInit {
 
   attack_percentage(): void{
     let current = new Date().getTime();  //get current time in seconds. 
-    let completed = current - this.current_attack.start_time.getTime(); //get time since start time.
-    this.current_attack.percentage = Math.floor((completed/1000)/(this.current_attack.end_time)); //compare start time against end time.
-    //this.current_attack.percentage = Math.floor(this.current_attack.end_time);
-    this.data_store.store_attack_percentage(this.data_store.fetch_percentage());
+
+    if(this.current_attack.percentage < 100){
+      let completed = current - this.current_attack.start_time.getTime(); //get time since start time.
+      this.current_attack.percentage = Math.floor((completed/1000)/(this.current_attack.end_time)); //compare start time against end time.
+      this.data_store.store_attack_percentage(this.data_store.fetch_percentage());
+
+      if(this.current_attack.percentage >= 100){
+        this.data_store.store_bits(this.data_store.fetch_bits() + this.reward());
+        this.current_attack.percentage == 0;
+        this.current_attack == null;
+        this.attack_active = false;
+      }
+    }
   }
 
   cycle(): void {
