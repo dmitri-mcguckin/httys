@@ -7,6 +7,7 @@ import { InfoHotbarComponent } from 'src/app/components/info-hotbar/info-hotbar.
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AttackPane } from './components/attacks/attacks.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ContractsComponent } from './components/contracts/contracts.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SkillTreeComponent,
     InfoHotbarComponent,
     AttackPane,
+    ContractsComponent,
   ],
   imports: [
     BrowserModule,
