@@ -21,6 +21,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Configure git credentials
+        run: |
+          git config --global user.email "dmitri.mcguckin26@gmail.com"
+          git config --global user.name "Dmitri McGuckin"
       - name: Switch to build branch
         run: git checkout -B build
 
@@ -40,10 +44,11 @@ jobs:
           mv ../dist/httys/* .
           rm -rf ../dist
 
-      - name: Push to build branch
+      - run: git add -A
+      - run: git commit -am "Website Build"
+      - name: Delete `build` if already exists
         run: |
-          git config --global user.email "dmitri.mcguckin26@gmail.com"
-          git config --global user.name "dmitri-mcguckin"
-          git add -A
-          git commit -am "Build"
-          git push -f --set-upstream origin build
+          if [[ -n "$(git ls-remote --heads origin build)" ]]; then
+            git push origin --delete build
+          fi
+      - run: git push origin build
