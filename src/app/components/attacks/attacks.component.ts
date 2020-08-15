@@ -51,9 +51,8 @@ interface Attack {
 @Component({
   selector: 'attack-pane',
   templateUrl: './attacks.component.html',
-  styleUrls: ['./attacks.component.sass']
+  styleUrls: ['./attacks.component.sass'],
 })
-
 export class AttackPane implements OnInit {
   event_timer: any;
   tick_time: number = 100;
@@ -69,7 +68,7 @@ export class AttackPane implements OnInit {
     this.attack_options = Object.keys(attacks);
 
     this.attack_select_form = new FormGroup({
-      attack: new FormControl(0, Validators.required)
+      attack: new FormControl(0, Validators.required),
     });
 
     this.event_timer = setInterval(() => {
@@ -89,15 +88,13 @@ export class AttackPane implements OnInit {
       description: this.genearte_random_tooltip(),
       percentage: 0,
       start_time: new Date(),
-      end_time: null
-    }
+      end_time: null,
+    };
 
     this.attack_active = true;
   }
 
-  cycle(): void {
-
-  }
+  cycle(): void {}
 
   /**Check if contract is up. Return duration so we can set percetage bar in main page.*/
   // check_time(currency: currencies, attacking: attacks): number {
@@ -115,17 +112,16 @@ export class AttackPane implements OnInit {
   //     }
   // }
 
-  reward(){
-      let reward = Math.floor(Math.random() * 500) + 1; //genearte a random number between 1 and 100.
-      return reward;
+  reward() {
+    let reward = Math.floor(Math.random() * 500) + 1; //genearte a random number between 1 and 100.
+    return reward;
   }
-
 
   /**Give random attack info per attack. */
   genearte_random_tooltip(): string {
-      //source: https://www.safetydetectives.com/blog/malware-statistics/
-      const index = Math.floor(Math.random() * (9 - 1) + 1);
-      return tooltips[index];
+    //source: https://www.safetydetectives.com/blog/malware-statistics/
+    const index = Math.floor(Math.random() * (9 - 1) + 1);
+    return tooltips[index];
   }
 
   ngOnInit(): void {}
